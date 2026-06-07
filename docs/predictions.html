@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Predictions - 2026 NBA Finals</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="static/css/style.css">
+
+  
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <span class="icon">🏀</span>
+        <span data-i18n="nav.brand">NBA Finals 2026</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <ul class="navbar-links">
+          <li><a href="index.html" data-i18n="nav.overview">Series Overview</a></li>
+          <li><a href="predictions.html" data-i18n="nav.predictions">Predictions</a></li>
+          <li><a href="players.html" data-i18n="nav.players">Players</a></li>
+          <li><a href="simulator.html" data-i18n="nav.simulator">Simulator</a></li>
+        </ul>
+        <button id="lang-toggle" class="lang-toggle" onclick="I18N.toggle()" title="切换到中文">中</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    
+<div class="container">
+
+  <div class="section-header" style="margin-top: 2rem;">
+    <h1 class="section-title" data-i18n="pred_page.title">Game Predictions</h1>
+    <p class="section-subtitle" data-i18n="pred_page.subtitle">AI-powered predictions for each remaining game in the 2026 NBA Finals</p>
+  </div>
+
+  <!-- Current Series State -->
+  <div class="card" style="margin-bottom: 2rem;">
+    <div class="card-header">
+      <h3 class="card-title" data-i18n="pred_page.current_state">Current Series State</h3>
+      <span class="card-badge" data-i18n="pred_page.knicks_lead">Knicks lead 2-0</span>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem;">
+      <div style="text-align: center;">
+        <div class="font-bold text-spurs" style="font-size: 1.1rem;" data-i18n="common.spurs">Spurs</div>
+        <div class="font-mono" style="font-size: 3rem; font-weight: 900; color: var(--spurs-primary);">0</div>
+      </div>
+      <div class="text-muted" style="font-size: 1.5rem;">&ndash;</div>
+      <div style="text-align: center;">
+        <div class="font-bold text-knicks" style="font-size: 1.1rem;" data-i18n="common.knicks">Knicks</div>
+        <div class="font-mono" style="font-size: 3rem; font-weight: 900; color: var(--knicks-secondary);">2</div>
+      </div>
+    </div>
+
+    <div class="historical-note" style="margin-top: 1rem;">
+      <strong data-i18n="pred_page.history">History:</strong>
+      <span data-i18n="pred_page.history_text">Teams trailing 0-2 in the Finals have come back only 5.7% of the time. The 2-3-2 format now sends the series to MSG for three straight games (Games 3-5).</span>
+    </div>
+  </div>
+
+  <!-- Game-by-Game Predictions -->
+  <div class="section-header">
+    <h2 class="section-title" data-i18n="pred_page.remaining">Remaining Game Predictions</h2>
+  </div>
+
+  <div class="grid-2">
+    
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number"><span data-i18n="common.game">Game</span> 3</span>
+        <span class="game-date">2026-06-09</span>
+      </div>
+      <div class="game-card-body">
+        <div class="game-location">📍 Madison Square Garden, New York</div>
+
+        <!-- Win Probability -->
+        <div class="game-teams">
+          <div class="game-team">
+            <div class="game-team-name text-knicks">
+              NYK (<span data-i18n="pred_page.home">Home</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: var(--knicks-primary);">
+              63.9%
+            </div>
+          </div>
+          <div class="game-vs" data-i18n="common.vs">vs</div>
+          <div class="game-team">
+            <div class="game-team-name text-spurs">
+              SAS (<span data-i18n="pred_page.away">Away</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: var(--spurs-primary);">
+              36.1%
+            </div>
+          </div>
+        </div>
+
+        <!-- Probability Bar -->
+        <div class="prob-bar" style="height: 12px;">
+          <div class="prob-fill knicks" style="width: 63.9%"></div>
+          <div class="prob-fill spurs" style="width: 36.1%"></div>
+        </div>
+
+        <!-- Predicted Score -->
+        <div class="game-prediction">
+          <div class="text-muted" style="font-size: 0.75rem; margin-bottom: 0.25rem;" data-i18n="pred_page.predicted_score">Predicted Final Score</div>
+          <div class="predicted-score" style="font-size: 1.5rem;">
+            <span style="color: var(--knicks-primary);">116</span>
+            <span class="text-muted"> - </span>
+            <span style="color: var(--spurs-primary);">114</span>
+          </div>
+        </div>
+
+        <!-- Key Factors -->
+        <div style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="pred_page.key_factors">Key Factors</div>
+          <ul class="factor-list">
+            
+            <li>🏠 Knicks home court at Madison Square Garden</li>
+            
+            <li>⚠️ Spurs face 0-2 deficit (5.7% historical comeback rate)</li>
+            
+            <li>📊 Knicks net rating advantage: +-2.0</li>
+            
+            <li>🎯 Brunson: 26.0 PPG, 6.8 APG</li>
+            
+          </ul>
+          
+          <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.03);">
+            <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em;">Player Data Insights</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🌟 NYK MVP: Karl-Anthony Towns - 22.0 PPG / 12.0 RPG / 3.5 APG (Finals) 📈</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🌟 SAS MVP: Victor Wembanyama - 24.5 PPG / 12.5 RPG / 3.0 APG (Finals) ➡️</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🔥 NYK Hot: Jalen Brunson, OG Anunoby (outperforming season avg)</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🔥 SAS Hot: De'Aaron Fox (outperforming season avg)</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">❄️ SAS Cold: Devin Vassell, Keldon Johnson (below season avg)</div>
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number"><span data-i18n="common.game">Game</span> 4</span>
+        <span class="game-date">2026-06-11</span>
+      </div>
+      <div class="game-card-body">
+        <div class="game-location">📍 Madison Square Garden, New York</div>
+
+        <!-- Win Probability -->
+        <div class="game-teams">
+          <div class="game-team">
+            <div class="game-team-name text-knicks">
+              NYK (<span data-i18n="pred_page.home">Home</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: var(--knicks-primary);">
+              63.9%
+            </div>
+          </div>
+          <div class="game-vs" data-i18n="common.vs">vs</div>
+          <div class="game-team">
+            <div class="game-team-name text-spurs">
+              SAS (<span data-i18n="pred_page.away">Away</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: var(--spurs-primary);">
+              36.1%
+            </div>
+          </div>
+        </div>
+
+        <!-- Probability Bar -->
+        <div class="prob-bar" style="height: 12px;">
+          <div class="prob-fill knicks" style="width: 63.9%"></div>
+          <div class="prob-fill spurs" style="width: 36.1%"></div>
+        </div>
+
+        <!-- Predicted Score -->
+        <div class="game-prediction">
+          <div class="text-muted" style="font-size: 0.75rem; margin-bottom: 0.25rem;" data-i18n="pred_page.predicted_score">Predicted Final Score</div>
+          <div class="predicted-score" style="font-size: 1.5rem;">
+            <span style="color: var(--knicks-primary);">119</span>
+            <span class="text-muted"> - </span>
+            <span style="color: var(--spurs-primary);">112</span>
+          </div>
+        </div>
+
+        <!-- Key Factors -->
+        <div style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="pred_page.key_factors">Key Factors</div>
+          <ul class="factor-list">
+            
+            <li>🏠 Knicks home court at Madison Square Garden</li>
+            
+            <li>⚠️ Spurs face 0-2 deficit (5.7% historical comeback rate)</li>
+            
+            <li>📊 Knicks net rating advantage: +-2.0</li>
+            
+            <li>🎯 Brunson: 26.0 PPG, 6.8 APG</li>
+            
+          </ul>
+          
+          <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.03);">
+            <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em;">Player Data Insights</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🌟 NYK MVP: Karl-Anthony Towns - 22.0 PPG / 12.0 RPG / 3.5 APG (Finals) 📈</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🌟 SAS MVP: Victor Wembanyama - 24.5 PPG / 12.5 RPG / 3.0 APG (Finals) ➡️</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🔥 NYK Hot: Jalen Brunson, OG Anunoby (outperforming season avg)</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🔥 SAS Hot: De'Aaron Fox (outperforming season avg)</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">❄️ SAS Cold: Devin Vassell, Keldon Johnson (below season avg)</div>
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number"><span data-i18n="common.game">Game</span> 5</span>
+        <span class="game-date">2026-06-14</span>
+      </div>
+      <div class="game-card-body">
+        <div class="game-location">📍 Madison Square Garden, New York</div>
+
+        <!-- Win Probability -->
+        <div class="game-teams">
+          <div class="game-team">
+            <div class="game-team-name text-knicks">
+              NYK (<span data-i18n="pred_page.home">Home</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: var(--knicks-primary);">
+              63.9%
+            </div>
+          </div>
+          <div class="game-vs" data-i18n="common.vs">vs</div>
+          <div class="game-team">
+            <div class="game-team-name text-spurs">
+              SAS (<span data-i18n="pred_page.away">Away</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: var(--spurs-primary);">
+              36.1%
+            </div>
+          </div>
+        </div>
+
+        <!-- Probability Bar -->
+        <div class="prob-bar" style="height: 12px;">
+          <div class="prob-fill knicks" style="width: 63.9%"></div>
+          <div class="prob-fill spurs" style="width: 36.1%"></div>
+        </div>
+
+        <!-- Predicted Score -->
+        <div class="game-prediction">
+          <div class="text-muted" style="font-size: 0.75rem; margin-bottom: 0.25rem;" data-i18n="pred_page.predicted_score">Predicted Final Score</div>
+          <div class="predicted-score" style="font-size: 1.5rem;">
+            <span style="color: var(--knicks-primary);">120</span>
+            <span class="text-muted"> - </span>
+            <span style="color: var(--spurs-primary);">110</span>
+          </div>
+        </div>
+
+        <!-- Key Factors -->
+        <div style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="pred_page.key_factors">Key Factors</div>
+          <ul class="factor-list">
+            
+            <li>🏠 Knicks home court at Madison Square Garden</li>
+            
+            <li>⚠️ Spurs face 0-2 deficit (5.7% historical comeback rate)</li>
+            
+            <li>📊 Knicks net rating advantage: +-2.0</li>
+            
+            <li>🎯 Brunson: 26.0 PPG, 6.8 APG</li>
+            
+          </ul>
+          
+          <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.03);">
+            <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em;">Player Data Insights</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🌟 NYK MVP: Karl-Anthony Towns - 22.0 PPG / 12.0 RPG / 3.5 APG (Finals) 📈</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🌟 SAS MVP: Victor Wembanyama - 24.5 PPG / 12.5 RPG / 3.0 APG (Finals) ➡️</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🔥 NYK Hot: Jalen Brunson, OG Anunoby (outperforming season avg)</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🔥 SAS Hot: De'Aaron Fox (outperforming season avg)</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">❄️ SAS Cold: Devin Vassell, Keldon Johnson (below season avg)</div>
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number"><span data-i18n="common.game">Game</span> 6</span>
+        <span class="game-date">2026-06-17</span>
+      </div>
+      <div class="game-card-body">
+        <div class="game-location">📍 Frost Bank Center, San Antonio</div>
+
+        <!-- Win Probability -->
+        <div class="game-teams">
+          <div class="game-team">
+            <div class="game-team-name text-spurs">
+              SAS (<span data-i18n="pred_page.home">Home</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: var(--spurs-primary);">
+              64.1%
+            </div>
+          </div>
+          <div class="game-vs" data-i18n="common.vs">vs</div>
+          <div class="game-team">
+            <div class="game-team-name text-knicks">
+              NYK (<span data-i18n="pred_page.away">Away</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: var(--knicks-primary);">
+              35.9%
+            </div>
+          </div>
+        </div>
+
+        <!-- Probability Bar -->
+        <div class="prob-bar" style="height: 12px;">
+          <div class="prob-fill spurs" style="width: 64.1%"></div>
+          <div class="prob-fill knicks" style="width: 35.9%"></div>
+        </div>
+
+        <!-- Predicted Score -->
+        <div class="game-prediction">
+          <div class="text-muted" style="font-size: 0.75rem; margin-bottom: 0.25rem;" data-i18n="pred_page.predicted_score">Predicted Final Score</div>
+          <div class="predicted-score" style="font-size: 1.5rem;">
+            <span style="color: var(--spurs-primary);">121</span>
+            <span class="text-muted"> - </span>
+            <span style="color: var(--knicks-primary);">110</span>
+          </div>
+        </div>
+
+        <!-- Key Factors -->
+        <div style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="pred_page.key_factors">Key Factors</div>
+          <ul class="factor-list">
+            
+            <li>🏠 Spurs home court at Frost Bank Center</li>
+            
+            <li>⚠️ Spurs face 0-2 deficit (5.7% historical comeback rate)</li>
+            
+            <li>📊 Knicks net rating advantage: +-2.0</li>
+            
+            <li>🎯 Wembanyama: 25.0 PPG, 3.1 BPG</li>
+            
+          </ul>
+          
+          <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.03);">
+            <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em;">Player Data Insights</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🌟 SAS MVP: Victor Wembanyama - 24.5 PPG / 12.5 RPG / 3.0 APG (Finals) ➡️</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🌟 NYK MVP: Karl-Anthony Towns - 22.0 PPG / 12.0 RPG / 3.5 APG (Finals) 📈</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🔥 SAS Hot: De'Aaron Fox (outperforming season avg)</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">❄️ SAS Cold: Devin Vassell, Keldon Johnson (below season avg)</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🔥 NYK Hot: Jalen Brunson, OG Anunoby (outperforming season avg)</div>
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number"><span data-i18n="common.game">Game</span> 7</span>
+        <span class="game-date">2026-06-20</span>
+      </div>
+      <div class="game-card-body">
+        <div class="game-location">📍 Frost Bank Center, San Antonio</div>
+
+        <!-- Win Probability -->
+        <div class="game-teams">
+          <div class="game-team">
+            <div class="game-team-name text-spurs">
+              SAS (<span data-i18n="pred_page.home">Home</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: var(--spurs-primary);">
+              64.1%
+            </div>
+          </div>
+          <div class="game-vs" data-i18n="common.vs">vs</div>
+          <div class="game-team">
+            <div class="game-team-name text-knicks">
+              NYK (<span data-i18n="pred_page.away">Away</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: var(--knicks-primary);">
+              35.9%
+            </div>
+          </div>
+        </div>
+
+        <!-- Probability Bar -->
+        <div class="prob-bar" style="height: 12px;">
+          <div class="prob-fill spurs" style="width: 64.1%"></div>
+          <div class="prob-fill knicks" style="width: 35.9%"></div>
+        </div>
+
+        <!-- Predicted Score -->
+        <div class="game-prediction">
+          <div class="text-muted" style="font-size: 0.75rem; margin-bottom: 0.25rem;" data-i18n="pred_page.predicted_score">Predicted Final Score</div>
+          <div class="predicted-score" style="font-size: 1.5rem;">
+            <span style="color: var(--spurs-primary);">119</span>
+            <span class="text-muted"> - </span>
+            <span style="color: var(--knicks-primary);">113</span>
+          </div>
+        </div>
+
+        <!-- Key Factors -->
+        <div style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="pred_page.key_factors">Key Factors</div>
+          <ul class="factor-list">
+            
+            <li>🏠 Spurs home court at Frost Bank Center</li>
+            
+            <li>⚠️ Spurs face 0-2 deficit (5.7% historical comeback rate)</li>
+            
+            <li>📊 Knicks net rating advantage: +-2.0</li>
+            
+            <li>🎯 Wembanyama: 25.0 PPG, 3.1 BPG</li>
+            
+          </ul>
+          
+          <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.03);">
+            <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em;">Player Data Insights</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🌟 SAS MVP: Victor Wembanyama - 24.5 PPG / 12.5 RPG / 3.0 APG (Finals) ➡️</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🌟 NYK MVP: Karl-Anthony Towns - 22.0 PPG / 12.0 RPG / 3.5 APG (Finals) 📈</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🔥 SAS Hot: De'Aaron Fox (outperforming season avg)</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">❄️ SAS Cold: Devin Vassell, Keldon Johnson (below season avg)</div>
+            
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">🔥 NYK Hot: Jalen Brunson, OG Anunoby (outperforming season avg)</div>
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- Scenario Analysis -->
+  <section style="margin-top: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="pred_page.scenario">Scenario Analysis</h2>
+      <p class="section-subtitle" data-i18n="pred_page.scenario_subtitle">How Game 3 outcome affects the rest of the series</p>
+    </div>
+
+    <div class="grid-2">
+      
+      <div class="scenario-card">
+        <div class="scenario-title">If Spurs win Game 3</div>
+        <div class="scenario-state">Series: Spurs 1-2 Knicks</div>
+        <div class="stat-comparison" style="margin-top: 1rem;">
+          <div class="stat-label">
+            <span>Game 4 Home Win Probability</span>
+            <span class="font-mono font-bold">63.9%</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-bar spurs" style="width: 63.9%"></div>
+          </div>
+        </div>
+        <div class="scenario-note">Spurs gain momentum, series shifts to San Antonio</div>
+      </div>
+      
+      <div class="scenario-card">
+        <div class="scenario-title">If Knicks win Game 3</div>
+        <div class="scenario-state">Series: Spurs 0-3 Knicks</div>
+        <div class="stat-comparison" style="margin-top: 1rem;">
+          <div class="stat-label">
+            <span>Game 4 Home Win Probability</span>
+            <span class="font-mono font-bold">63.9%</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-bar spurs" style="width: 63.9%"></div>
+          </div>
+        </div>
+        <div class="scenario-note">Knicks can sweep at 3-0 (no team has ever come back from 0-3)</div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Model Methodology -->
+  <section style="margin-top: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="pred_page.method_title">Prediction Methodology</h2>
+    </div>
+
+    <div class="card">
+      <div class="grid-3" style="gap: 1.5rem;">
+        <div>
+          <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;" data-i18n="pred_page.method_elo_title">📊 Elo Rating System</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);" data-i18n="pred_page.method_elo_desc">
+            Each team has an Elo rating that updates based on game results. Home court adds ~100 Elo points (roughly 3-4% win probability). Playoff experience and historical Finals success are factored in.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: var(--accent-orange); margin-bottom: 0.5rem;" data-i18n="pred_page.method_stats_title">📈 Team Statistics</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);" data-i18n="pred_page.method_stats_desc">
+            Offensive and defensive efficiency ratings, pace, shooting percentages, and rebounding rates are combined into a composite strength score. Weighted toward recent performance.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: var(--accent-purple); margin-bottom: 0.5rem;" data-i18n="pred_page.method_monte_title">🎲 Monte Carlo Simulation</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);" data-i18n="pred_page.method_monte_desc">
+            10,000 simulations of the remaining series, each using the per-game probabilities. Accounts for series dynamics like desperation, momentum, and close-out pressure.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.03); margin-top: 3rem;">
+    <p data-i18n="footer.desc">2026 NBA Finals Predictor &mdash; Data-driven predictions using Elo ratings, team statistics, and Monte Carlo simulation</p>
+    <p style="margin-top: 0.5rem;" data-i18n="footer.series">Spurs vs Knicks &bull; Series: Knicks lead 2-0</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="static/js/charts.js"></script>
+  <script src="static/js/i18n.js"></script>
+  <script src="static/js/main.js"></script>
+  
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  I18N.init();
+});
+</script>
+
+
+</body>
+</html>

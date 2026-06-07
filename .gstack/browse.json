@@ -1,9 +1,0 @@
-{
-  "pid": 33629,
-  "port": 39990,
-  "token": "4e9b5079-854d-4b79-966c-e533aa2e7a78",
-  "startedAt": "2026-06-07T02:17:48.374Z",
-  "serverPath": "/Users/htsage/.claude/skills/gstack/browse/src/server.ts",
-  "mode": "launched",
-  "configHash": "303a7eeccc03078b"
-}

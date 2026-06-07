@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Series Overview - 2026 NBA Finals</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="static/css/style.css">
+
+  
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <span class="icon">🏀</span>
+        <span data-i18n="nav.brand">NBA Finals 2026</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <ul class="navbar-links">
+          <li><a href="index.html" data-i18n="nav.overview">Series Overview</a></li>
+          <li><a href="predictions.html" data-i18n="nav.predictions">Predictions</a></li>
+          <li><a href="players.html" data-i18n="nav.players">Players</a></li>
+          <li><a href="simulator.html" data-i18n="nav.simulator">Simulator</a></li>
+        </ul>
+        <button id="lang-toggle" class="lang-toggle" onclick="I18N.toggle()" title="切换到中文">中</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    
+<div class="container">
+
+  <!-- Series Hero -->
+  <section class="series-hero">
+    <div class="series-badge" data-i18n="hero.badge">2026 NBA Finals</div>
+    <h1 style="margin-bottom: 0.5rem;" data-i18n="hero.title">Spurs vs Knicks</h1>
+    <p class="text-secondary" data-i18n="hero.format">Best of 7 &bull; 2-3-2 Format</p>
+
+    <div class="series-matchup">
+      <!-- Spurs -->
+      <div class="team-block">
+        <div class="team-logo spurs">SAS</div>
+        <div class="team-name text-spurs" data-i18n="hero.spurs_name">San Antonio Spurs</div>
+        <div class="team-record">62-20 &bull; <span data-i18n="hero.west">West</span> #1</div>
+      </div>
+
+      <!-- Score -->
+      <div class="series-score">
+        <div class="score-display">
+          <span class="spurs-score">0</span>
+          <span class="separator">&ndash;</span>
+          <span class="knicks-score">2</span>
+        </div>
+        <div class="series-status">
+          
+            <span data-i18n="hero.status.next">Next: Game</span> 3 &bull; <span data-i18n="hero.status.must_win">Spurs must win to stay alive</span>
+          
+        </div>
+      </div>
+
+      <!-- Knicks -->
+      <div class="team-block">
+        <div class="team-logo knicks">NYK</div>
+        <div class="team-name text-knicks" data-i18n="hero.knicks_name">New York Knicks</div>
+        <div class="team-record">53-29 &bull; <span data-i18n="hero.east">East</span> #2</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prediction Methodology (Prominent) -->
+  <section class="method-section">
+    <div class="method-card">
+      <div class="card-header">
+        <h3 class="card-title" data-i18n="method.title">🔬 Prediction Methodology</h3>
+        <span class="card-badge" data-i18n="method.subtitle">How our AI model generates predictions</span>
+      </div>
+
+      <!-- Overview -->
+      <div class="method-overview">
+        <div style="font-size: 2rem;">🧠</div>
+        <div>
+          <h4 style="margin-bottom: 0.25rem;" data-i18n="method.overview_title">Model Overview</h4>
+          <p class="method-overview-text" data-i18n="method.overview_desc">Our prediction model combines three complementary approaches to generate accurate game and series predictions.</p>
+        </div>
+      </div>
+
+      <!-- Three Pillars -->
+      <div class="method-grid">
+        <!-- Elo Rating -->
+        <div class="method-item">
+          <h4 style="color: var(--accent-blue);" data-i18n="method.elo_title">Elo Rating System</h4>
+          <p data-i18n="method.elo_desc">Each team has a dynamic Elo rating that updates based on game results. The Elo difference is converted to win probability using the logistic function.</p>
+          <div class="method-formula-label" data-i18n="method.elo_formula">Formula:</div>
+          <div class="method-formula">P(win) = 1 / (1 + 10<sup>(-elo_diff / 400)</sup>)</div>
+          <div class="method-bullet" data-i18n="method.elo_home">Home court adds ~100 Elo points (~3-4% win probability boost)</div>
+          <div class="method-bullet" data-i18n="method.elo_playoff">Playoff bonus: +50 Elo points for series advancement</div>
+        </div>
+
+        <!-- Team Statistics -->
+        <div class="method-item">
+          <h4 style="color: var(--accent-orange);" data-i18n="method.stats_title">Team Statistics Model</h4>
+          <p data-i18n="method.stats_desc">A composite strength score is calculated from multiple team statistics, each weighted by predictive power.</p>
+          <div style="margin-top: 0.75rem;">
+            <div class="method-bullet">OffRtg / DefRtg / NetRtg</div>
+            <div class="method-bullet">FG% / 3P% / FT%</div>
+            <div class="method-bullet">Pace / Rebound% / AST Ratio</div>
+            <div class="method-bullet">eFG% / True Shooting%</div>
+          </div>
+        </div>
+
+        <!-- Monte Carlo -->
+        <div class="method-item">
+          <h4 style="color: var(--accent-purple);" data-i18n="method.monte_title">Monte Carlo Simulation</h4>
+          <p data-i18n="method.monte_desc">10,000 simulations of the remaining series, each using per-game probabilities. This gives us the full distribution of possible outcomes.</p>
+          <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);" data-i18n="method.monte_features">Accounts for series dynamics:</div>
+          <div class="method-bullet" data-i18n="method.monte_desperation">Desperation factor (elimination games)</div>
+          <div class="method-bullet" data-i18n="method.monte_momentum">Momentum (win/loss streaks)</div>
+          <div class="method-bullet" data-i18n="method.monte_closeout">Close-out pressure</div>
+        </div>
+      </div>
+
+      <!-- Weight Table -->
+      <h4 style="margin-bottom: 0.75rem;" data-i18n="method.weights_title">Factor Weights</h4>
+      <table class="weights-table">
+        <thead>
+          <tr>
+            <th data-i18n="method.weight_factor">Factor</th>
+            <th data-i18n="method.weight_pct">Weight</th>
+            <th data-i18n="method.weight_desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="method.w_elo">Elo Rating Difference</td>
+            <td><span class="weight-bar" style="width: 80px;"></span><span class="weight-pct" data-i18n="method.w_elo_pct">40%</span></td>
+            <td data-i18n="method.w_elo_desc">Base win probability from team ratings</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_home">Home Court Advantage</td>
+            <td><span class="weight-bar" style="width: 30px;"></span><span class="weight-pct" data-i18n="method.w_home_pct">15%</span></td>
+            <td data-i18n="method.w_home_desc">~100 Elo points for home team</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_off">Offensive Efficiency</td>
+            <td><span class="weight-bar" style="width: 30px;"></span><span class="weight-pct" data-i18n="method.w_off_pct">15%</span></td>
+            <td data-i18n="method.w_off_desc">Points per 100 possessions</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_def">Defensive Efficiency</td>
+            <td><span class="weight-bar" style="width: 24px;"></span><span class="weight-pct" data-i18n="method.w_def_pct">12%</span></td>
+            <td data-i18n="method.w_def_desc">Opponent points per 100 possessions</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_net">Net Rating</td>
+            <td><span class="weight-bar" style="width: 16px;"></span><span class="weight-pct" data-i18n="method.w_net_pct">8%</span></td>
+            <td data-i18n="method.w_net_desc">Offensive minus defensive rating</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_schedule">Schedule Factors</td>
+            <td><span class="weight-bar" style="width: 10px;"></span><span class="weight-pct" data-i18n="method.w_schedule_pct">5%</span></td>
+            <td data-i18n="method.w_schedule_desc">Rest days, back-to-backs, travel</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_history">Historical Factors</td>
+            <td><span class="weight-bar" style="width: 10px;"></span><span class="weight-pct" data-i18n="method.w_history_pct">5%</span></td>
+            <td data-i18n="method.w_history_desc">Finals experience, comeback rates</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td data-i18n="method.total">Total</td>
+            <td><span class="weight-pct" data-i18n="method.total_pct">100%</span></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- Series Win Probability -->
+  <section style="margin-top: 2rem;">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title" data-i18n="prob.title">Series Win Probability</h3>
+        <span class="card-badge" data-i18n="prob.badge">Monte Carlo (10,000 sims)</span>
+      </div>
+
+      <div class="grid-2" style="align-items: center;">
+        <div>
+          <div class="prob-bar">
+            <div class="prob-fill spurs" style="width: 14.3%">
+              14.3%
+            </div>
+            <div class="prob-fill knicks" style="width: 85.7%">
+              85.7%
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+            <span class="text-spurs font-bold" data-i18n="prob.spurs">Spurs</span>
+            <span class="text-knicks font-bold" data-i18n="prob.knicks">Knicks</span>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <div class="stat-comparison">
+              <div class="stat-label">
+                <span data-i18n="prob.most_likely">Most Likely Outcome</span>
+                <span class="font-mono font-bold">0-4</span>
+              </div>
+            </div>
+            <div class="stat-comparison">
+              <div class="stat-label">
+                <span data-i18n="prob.avg_games">Average Games</span>
+                <span class="font-mono font-bold">5.1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="height: 300px;">
+          <canvas id="seriesProbChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Completed Games -->
+  <section style="margin-top: 2rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="completed.title">Completed Games</h2>
+      <p class="section-subtitle" data-i18n="completed.subtitle">Results from Games 1-2 at Frost Bank Center</p>
+    </div>
+
+    <div class="grid-2">
+      
+        
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><span data-i18n="common.game">Game</span> 1</h3>
+            <span class="text-secondary" style="font-size: 0.85rem;">2026-06-04</span>
+          </div>
+
+          <div style="text-align: center; margin-bottom: 1rem;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">Frost Bank Center, San Antonio</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 1.5rem;">
+              <div>
+                <div class="font-bold text-knicks" data-i18n="common.knicks">Knicks</div>
+                <div class="font-mono" style="font-size: 2rem; font-weight: 900; color: var(--knicks-secondary);">105</div>
+              </div>
+              <div class="text-muted" data-i18n="common.vs">vs</div>
+              <div>
+                <div class="font-bold text-spurs" data-i18n="common.spurs">Spurs</div>
+                <div class="font-mono" style="font-size: 2rem; font-weight: 900; color: var(--spurs-primary);">95</div>
+              </div>
+            </div>
+          </div>
+
+          
+          <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;" data-i18n="completed.performances">Key Performances</div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.85rem;">
+              <span class="font-bold">Brunson</span>
+              <span class="font-mono text-secondary">28 pts, 7 ast</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.85rem;">
+              <span class="font-bold">Towns</span>
+              <span class="font-mono text-secondary">22 pts, 11 reb</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.85rem;">
+              <span class="font-bold">Wembanyama</span>
+              <span class="font-mono text-secondary">24 pts, 13 reb, 4 blk</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.85rem;">
+              <span class="font-bold">Fox</span>
+              <span class="font-mono text-secondary">20 pts, 5 ast</span>
+            </div>
+            
+          </div>
+          
+        </div>
+        
+      
+        
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><span data-i18n="common.game">Game</span> 2</h3>
+            <span class="text-secondary" style="font-size: 0.85rem;">2026-06-06</span>
+          </div>
+
+          <div style="text-align: center; margin-bottom: 1rem;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">Frost Bank Center, San Antonio</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 1.5rem;">
+              <div>
+                <div class="font-bold text-knicks" data-i18n="common.knicks">Knicks</div>
+                <div class="font-mono" style="font-size: 2rem; font-weight: 900; color: var(--knicks-secondary);">105</div>
+              </div>
+              <div class="text-muted" data-i18n="common.vs">vs</div>
+              <div>
+                <div class="font-bold text-spurs" data-i18n="common.spurs">Spurs</div>
+                <div class="font-mono" style="font-size: 2rem; font-weight: 900; color: var(--spurs-primary);">104</div>
+              </div>
+            </div>
+          </div>
+
+          
+          <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;" data-i18n="completed.performances">Key Performances</div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.85rem;">
+              <span class="font-bold">Brunson</span>
+              <span class="font-mono text-secondary">30 pts, 9 ast</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.85rem;">
+              <span class="font-bold">Anunoby</span>
+              <span class="font-mono text-secondary">20 pts, 3 stl</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.85rem;">
+              <span class="font-bold">Wembanyama</span>
+              <span class="font-mono text-secondary">26 pts, 12 reb, 5 blk</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.85rem;">
+              <span class="font-bold">Fox</span>
+              <span class="font-mono text-secondary">24 pts, 7 ast</span>
+            </div>
+            
+          </div>
+          
+        </div>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </section>
+
+  <!-- Upcoming Predictions -->
+  <section style="margin-top: 2rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="pred.title">Upcoming Game Predictions</h2>
+      <p class="section-subtitle" data-i18n="pred.subtitle">AI-powered predictions for remaining games</p>
+    </div>
+
+    <div class="grid-3">
+      
+      <div class="game-card">
+        <div class="game-card-header">
+          <span class="game-number"><span data-i18n="common.game">Game</span> 3</span>
+          <span class="game-date">2026-06-09</span>
+        </div>
+        <div class="game-card-body">
+          <div class="game-location">📍 Madison Square Garden, New York</div>
+
+          <div class="game-teams">
+            <div class="game-team">
+              <div class="game-team-name text-knicks">
+                NYK
+              </div>
+              <div class="game-team-prob font-mono">63.9%</div>
+            </div>
+            <div class="game-vs" data-i18n="common.vs">vs</div>
+            <div class="game-team">
+              <div class="game-team-name text-spurs">
+                SAS
+              </div>
+              <div class="game-team-prob font-mono">36.1%</div>
+            </div>
+          </div>
+
+          <div class="prob-bar" style="height: 8px;">
+            <div class="prob-fill knicks" style="width: 63.9%"></div>
+            <div class="prob-fill spurs" style="width: 36.1%"></div>
+          </div>
+
+          <div class="game-prediction">
+            <div class="text-muted" style="font-size: 0.75rem;" data-i18n="pred.score">Predicted Score</div>
+            <div class="predicted-score">116 - 114</div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <ul class="factor-list">
+              
+              <li>🏠 Knicks home court at Madison Square Garden</li>
+              
+              <li>⚠️ Spurs face 0-2 deficit (5.7% historical comeback rate)</li>
+              
+              <li>📊 Knicks net rating advantage: +-2.0</li>
+              
+            </ul>
+            
+            <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.03);">
+              
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">🌟 NYK MVP: Karl-Anthony Towns - 22.0 PPG / 12.0 RPG / 3.5 APG (Finals) 📈</div>
+              
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">🌟 SAS MVP: Victor Wembanyama - 24.5 PPG / 12.5 RPG / 3.0 APG (Finals) ➡️</div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="game-card">
+        <div class="game-card-header">
+          <span class="game-number"><span data-i18n="common.game">Game</span> 4</span>
+          <span class="game-date">2026-06-11</span>
+        </div>
+        <div class="game-card-body">
+          <div class="game-location">📍 Madison Square Garden, New York</div>
+
+          <div class="game-teams">
+            <div class="game-team">
+              <div class="game-team-name text-knicks">
+                NYK
+              </div>
+              <div class="game-team-prob font-mono">63.9%</div>
+            </div>
+            <div class="game-vs" data-i18n="common.vs">vs</div>
+            <div class="game-team">
+              <div class="game-team-name text-spurs">
+                SAS
+              </div>
+              <div class="game-team-prob font-mono">36.1%</div>
+            </div>
+          </div>
+
+          <div class="prob-bar" style="height: 8px;">
+            <div class="prob-fill knicks" style="width: 63.9%"></div>
+            <div class="prob-fill spurs" style="width: 36.1%"></div>
+          </div>
+
+          <div class="game-prediction">
+            <div class="text-muted" style="font-size: 0.75rem;" data-i18n="pred.score">Predicted Score</div>
+            <div class="predicted-score">119 - 112</div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <ul class="factor-list">
+              
+              <li>🏠 Knicks home court at Madison Square Garden</li>
+              
+              <li>⚠️ Spurs face 0-2 deficit (5.7% historical comeback rate)</li>
+              
+              <li>📊 Knicks net rating advantage: +-2.0</li>
+              
+            </ul>
+            
+            <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.03);">
+              
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">🌟 NYK MVP: Karl-Anthony Towns - 22.0 PPG / 12.0 RPG / 3.5 APG (Finals) 📈</div>
+              
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">🌟 SAS MVP: Victor Wembanyama - 24.5 PPG / 12.5 RPG / 3.0 APG (Finals) ➡️</div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="game-card">
+        <div class="game-card-header">
+          <span class="game-number"><span data-i18n="common.game">Game</span> 5</span>
+          <span class="game-date">2026-06-14</span>
+        </div>
+        <div class="game-card-body">
+          <div class="game-location">📍 Madison Square Garden, New York</div>
+
+          <div class="game-teams">
+            <div class="game-team">
+              <div class="game-team-name text-knicks">
+                NYK
+              </div>
+              <div class="game-team-prob font-mono">63.9%</div>
+            </div>
+            <div class="game-vs" data-i18n="common.vs">vs</div>
+            <div class="game-team">
+              <div class="game-team-name text-spurs">
+                SAS
+              </div>
+              <div class="game-team-prob font-mono">36.1%</div>
+            </div>
+          </div>
+
+          <div class="prob-bar" style="height: 8px;">
+            <div class="prob-fill knicks" style="width: 63.9%"></div>
+            <div class="prob-fill spurs" style="width: 36.1%"></div>
+          </div>
+
+          <div class="game-prediction">
+            <div class="text-muted" style="font-size: 0.75rem;" data-i18n="pred.score">Predicted Score</div>
+            <div class="predicted-score">120 - 110</div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <ul class="factor-list">
+              
+              <li>🏠 Knicks home court at Madison Square Garden</li>
+              
+              <li>⚠️ Spurs face 0-2 deficit (5.7% historical comeback rate)</li>
+              
+              <li>📊 Knicks net rating advantage: +-2.0</li>
+              
+            </ul>
+            
+            <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.03);">
+              
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">🌟 NYK MVP: Karl-Anthony Towns - 22.0 PPG / 12.0 RPG / 3.5 APG (Finals) 📈</div>
+              
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">🌟 SAS MVP: Victor Wembanyama - 24.5 PPG / 12.5 RPG / 3.0 APG (Finals) ➡️</div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="game-card">
+        <div class="game-card-header">
+          <span class="game-number"><span data-i18n="common.game">Game</span> 6</span>
+          <span class="game-date">2026-06-17</span>
+        </div>
+        <div class="game-card-body">
+          <div class="game-location">📍 Frost Bank Center, San Antonio</div>
+
+          <div class="game-teams">
+            <div class="game-team">
+              <div class="game-team-name text-spurs">
+                SAS
+              </div>
+              <div class="game-team-prob font-mono">64.1%</div>
+            </div>
+            <div class="game-vs" data-i18n="common.vs">vs</div>
+            <div class="game-team">
+              <div class="game-team-name text-knicks">
+                NYK
+              </div>
+              <div class="game-team-prob font-mono">35.9%</div>
+            </div>
+          </div>
+
+          <div class="prob-bar" style="height: 8px;">
+            <div class="prob-fill spurs" style="width: 64.1%"></div>
+            <div class="prob-fill knicks" style="width: 35.9%"></div>
+          </div>
+
+          <div class="game-prediction">
+            <div class="text-muted" style="font-size: 0.75rem;" data-i18n="pred.score">Predicted Score</div>
+            <div class="predicted-score">121 - 110</div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <ul class="factor-list">
+              
+              <li>🏠 Spurs home court at Frost Bank Center</li>
+              
+              <li>⚠️ Spurs face 0-2 deficit (5.7% historical comeback rate)</li>
+              
+              <li>📊 Knicks net rating advantage: +-2.0</li>
+              
+            </ul>
+            
+            <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.03);">
+              
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">🌟 SAS MVP: Victor Wembanyama - 24.5 PPG / 12.5 RPG / 3.0 APG (Finals) ➡️</div>
+              
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">🌟 NYK MVP: Karl-Anthony Towns - 22.0 PPG / 12.0 RPG / 3.5 APG (Finals) 📈</div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="game-card">
+        <div class="game-card-header">
+          <span class="game-number"><span data-i18n="common.game">Game</span> 7</span>
+          <span class="game-date">2026-06-20</span>
+        </div>
+        <div class="game-card-body">
+          <div class="game-location">📍 Frost Bank Center, San Antonio</div>
+
+          <div class="game-teams">
+            <div class="game-team">
+              <div class="game-team-name text-spurs">
+                SAS
+              </div>
+              <div class="game-team-prob font-mono">64.1%</div>
+            </div>
+            <div class="game-vs" data-i18n="common.vs">vs</div>
+            <div class="game-team">
+              <div class="game-team-name text-knicks">
+                NYK
+              </div>
+              <div class="game-team-prob font-mono">35.9%</div>
+            </div>
+          </div>
+
+          <div class="prob-bar" style="height: 8px;">
+            <div class="prob-fill spurs" style="width: 64.1%"></div>
+            <div class="prob-fill knicks" style="width: 35.9%"></div>
+          </div>
+
+          <div class="game-prediction">
+            <div class="text-muted" style="font-size: 0.75rem;" data-i18n="pred.score">Predicted Score</div>
+            <div class="predicted-score">119 - 113</div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <ul class="factor-list">
+              
+              <li>🏠 Spurs home court at Frost Bank Center</li>
+              
+              <li>⚠️ Spurs face 0-2 deficit (5.7% historical comeback rate)</li>
+              
+              <li>📊 Knicks net rating advantage: +-2.0</li>
+              
+            </ul>
+            
+            <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.03);">
+              
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">🌟 SAS MVP: Victor Wembanyama - 24.5 PPG / 12.5 RPG / 3.0 APG (Finals) ➡️</div>
+              
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">🌟 NYK MVP: Karl-Anthony Towns - 22.0 PPG / 12.0 RPG / 3.5 APG (Finals) 📈</div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Statistical Comparison -->
+  <section style="margin-top: 2rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="stats.title">Statistical Comparison</h2>
+      <p class="section-subtitle" data-i18n="stats.subtitle">Regular season and playoff performance metrics</p>
+    </div>
+
+    <div class="card">
+      <div style="height: 400px;">
+        <canvas id="statComparisonChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Outcome Distribution -->
+  <section style="margin-top: 2rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="outcomes.title">Series Outcome Distribution</h2>
+      <p class="section-subtitle" data-i18n="outcomes.subtitle">Probability of each possible series result</p>
+    </div>
+
+    <div class="card">
+      <div style="height: 300px;">
+        <canvas id="outcomeChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Factors -->
+  <section style="margin-top: 2rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="factors.title">Key Series Factors</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title text-spurs" data-i18n="factors.spurs_title">Spurs Advantages</h3>
+        </div>
+        <ul class="factor-list">
+          <li data-i18n="factors.spurs_1">🏆 5-0 all-time in NBA Finals (never lost)</li>
+          <li data-i18n="factors.spurs_2">🛡️ Victor Wembanyama: 3.8 BPG, elite rim protection</li>
+          <li data-i18n="factors.spurs_3">⚡ De'Aaron Fox speed can exploit Knicks in transition</li>
+          <li data-i18n="factors.spurs_4">🏠 Home court: Games 1, 2, 6, 7 at Frost Bank Center</li>
+          <li data-i18n="factors.spurs_5">😤 Nothing to lose mentality at 0-2</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title text-knicks" data-i18n="factors.knicks_title">Knicks Advantages</h3>
+        </div>
+        <ul class="factor-list">
+          <li data-i18n="factors.knicks_1">📊 Lead series 2-0 (94.3% of teams win from here)</li>
+          <li data-i18n="factors.knicks_2">🎯 Jalen Brunson: 27.5 PPG, 8.2 APG, Finals MVP favorite</li>
+          <li data-i18n="factors.knicks_3">🔒 OG Anunoby elite defense on Wembanyama</li>
+          <li data-i18n="factors.knicks_4">💪 Better net rating (+11.1 vs +7.7)</li>
+          <li data-i18n="factors.knicks_5">🏠 3 straight home games at MSG (Games 3, 4, 5)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="historical-note">
+      <strong data-i18n="factors.historical">Historical Context:</strong>
+      <span data-i18n="factors.historical_text">Teams trailing 0-2 in the NBA Finals have come back to win only 5.7% of the time (6 out of 105 series). However, the Spurs are historically perfect in Finals appearances (5-0), and the 2-3-2 format means they must now win at MSG before returning home for Games 6-7.</span>
+    </div>
+  </section>
+
+</div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.03); margin-top: 3rem;">
+    <p data-i18n="footer.desc">2026 NBA Finals Predictor &mdash; Data-driven predictions using Elo ratings, team statistics, and Monte Carlo simulation</p>
+    <p style="margin-top: 0.5rem;" data-i18n="footer.series">Spurs vs Knicks &bull; Series: Knicks lead 2-0</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="static/js/charts.js"></script>
+  <script src="static/js/i18n.js"></script>
+  <script src="static/js/main.js"></script>
+  
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize i18n
+  I18N.init();
+
+  // Series probability donut
+  createSeriesProbChart('seriesProbChart', 14.3, 85.7);
+
+  // Stat comparison chart
+  createStatComparisonChart(
+    'statComparisonChart',
+    ['PPG', 'OPPG', 'Off Rtg', 'Def Rtg', 'Net Rtg', 'FG%', '3P%', 'RPG', 'APG', 'BPG'],
+    [119.8, 108.5, 118.5, 107.2, 11.3, 48.3, 35.9, 47.0, 28.1, 12.6],
+    [116.5, 107.8, 117.8, 108.5, 9.3, 47.8, 37.3, 45.6, 27.4, 3.9]
+  );
+
+  // Outcome distribution
+  const outcomeProbs = {"0-4": 41.1, "1-4": 29.0, "2-4": 9.2, "3-4": 6.5, "4-2": 3.0, "4-3": 11.2};
+  createOutcomeChart('outcomeChart', outcomeProbs);
+});
+</script>
+
+
+</body>
+</html>

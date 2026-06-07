@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Series Simulator - 2026 NBA Finals</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="static/css/style.css">
+
+  
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <span class="icon">🏀</span>
+        <span data-i18n="nav.brand">NBA Finals 2026</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <ul class="navbar-links">
+          <li><a href="index.html" data-i18n="nav.overview">Series Overview</a></li>
+          <li><a href="predictions.html" data-i18n="nav.predictions">Predictions</a></li>
+          <li><a href="players.html" data-i18n="nav.players">Players</a></li>
+          <li><a href="simulator.html" data-i18n="nav.simulator">Simulator</a></li>
+        </ul>
+        <button id="lang-toggle" class="lang-toggle" onclick="I18N.toggle()" title="切换到中文">中</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    
+<div class="container">
+
+  <div class="section-header" style="margin-top: 2rem;">
+    <h1 class="section-title" data-i18n="sim.title">Series Simulator</h1>
+    <p class="section-subtitle" data-i18n="sim.subtitle">Monte Carlo simulation of the remaining 2026 NBA Finals series</p>
+  </div>
+
+  <!-- Simulation Results -->
+  <div class="grid-2" style="margin-bottom: 2rem;">
+    <div class="card">
+      <div class="sim-result">
+        <div class="sim-label" data-i18n="sim.spurs_win">Spurs Win Series</div>
+        <div class="sim-probability spurs">14.3%</div>
+        <div class="text-muted" style="font-size: 0.85rem;" data-i18n="sim.based_on">Based on 10,000 simulations</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sim-result">
+        <div class="sim-label" data-i18n="sim.knicks_win">Knicks Win Series</div>
+        <div class="sim-probability knicks">85.7%</div>
+        <div class="text-muted" style="font-size: 0.85rem;" data-i18n="sim.based_on">Based on 10,000 simulations</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Stats -->
+  <div class="card" style="margin-bottom: 2rem;">
+    <div class="card-header">
+      <h3 class="card-title" data-i18n="sim.summary">Simulation Summary</h3>
+      <span class="card-badge" data-i18n="sim.runs">10,000 runs</span>
+    </div>
+
+    <div class="grid-3">
+      <div style="text-align: center; padding: 1rem;">
+        <div class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.5rem;" data-i18n="sim.most_likely">Most Likely Outcome</div>
+        <div class="font-mono font-bold" style="font-size: 1.5rem; color: var(--accent-blue);">0-4</div>
+        <div class="text-secondary" style="font-size: 0.85rem;" data-i18n="sim.spurs_knicks">Spurs-Knicks</div>
+      </div>
+
+      <div style="text-align: center; padding: 1rem;">
+        <div class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.5rem;" data-i18n="sim.avg_length">Average Series Length</div>
+        <div class="font-mono font-bold" style="font-size: 1.5rem; color: var(--accent-orange);">5.1</div>
+        <div class="text-secondary" style="font-size: 0.85rem;" data-i18n="sim.games">games</div>
+      </div>
+
+      <div style="text-align: center; padding: 1rem;">
+        <div class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.5rem;" data-i18n="sim.current_state">Current Series State</div>
+        <div class="font-mono font-bold" style="font-size: 1.5rem; color: var(--accent-purple);">0-2</div>
+        <div class="text-secondary" style="font-size: 0.85rem;"><span data-i18n="sim.knicks_lead">Knicks lead</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Series Probability Progression -->
+  <div class="card" style="margin-bottom: 2rem;">
+    <div class="card-header">
+      <h3 class="card-title" data-i18n="sim.by_game">Series Probability by Game</h3>
+      <span class="card-badge" data-i18n="sim.per_game">Per-game win probability</span>
+    </div>
+
+    <div style="height: 300px;">
+      <canvas id="gameProbChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Outcome Distribution -->
+  <div class="card" style="margin-bottom: 2rem;">
+    <div class="card-header">
+      <h3 class="card-title" data-i18n="sim.distribution">Outcome Distribution</h3>
+      <span class="card-badge" data-i18n="sim.all_results">All possible series results</span>
+    </div>
+
+    <div style="height: 300px; margin-bottom: 1.5rem;">
+      <canvas id="outcomeChart"></canvas>
+    </div>
+
+    <!-- Outcome Table -->
+    <table class="outcome-table">
+      <thead>
+        <tr>
+          <th data-i18n="sim.series_result">Series Result</th>
+          <th data-i18n="sim.spurs_wins">Spurs Wins</th>
+          <th data-i18n="sim.knicks_wins">Knicks Wins</th>
+          <th data-i18n="sim.probability">Probability</th>
+          <th data-i18n="sim.winner">Winner</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        
+        <tr>
+          <td class="font-mono font-bold">0-4</td>
+          <td>0</td>
+          <td>4</td>
+          <td>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                <div style="width: 41.1%; height: 100%; background: var(--knicks-primary); border-radius: 3px;"></div>
+              </div>
+              <span class="font-mono">41.1%</span>
+            </div>
+          </td>
+          <td>
+            
+              <span class="text-knicks font-bold" data-i18n="common.knicks">Knicks</span>
+            
+          </td>
+        </tr>
+        
+        
+        <tr>
+          <td class="font-mono font-bold">1-4</td>
+          <td>1</td>
+          <td>4</td>
+          <td>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                <div style="width: 29.0%; height: 100%; background: var(--knicks-primary); border-radius: 3px;"></div>
+              </div>
+              <span class="font-mono">29.0%</span>
+            </div>
+          </td>
+          <td>
+            
+              <span class="text-knicks font-bold" data-i18n="common.knicks">Knicks</span>
+            
+          </td>
+        </tr>
+        
+        
+        <tr>
+          <td class="font-mono font-bold">2-4</td>
+          <td>2</td>
+          <td>4</td>
+          <td>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                <div style="width: 9.2%; height: 100%; background: var(--knicks-primary); border-radius: 3px;"></div>
+              </div>
+              <span class="font-mono">9.2%</span>
+            </div>
+          </td>
+          <td>
+            
+              <span class="text-knicks font-bold" data-i18n="common.knicks">Knicks</span>
+            
+          </td>
+        </tr>
+        
+        
+        <tr>
+          <td class="font-mono font-bold">3-4</td>
+          <td>3</td>
+          <td>4</td>
+          <td>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                <div style="width: 6.5%; height: 100%; background: var(--knicks-primary); border-radius: 3px;"></div>
+              </div>
+              <span class="font-mono">6.5%</span>
+            </div>
+          </td>
+          <td>
+            
+              <span class="text-knicks font-bold" data-i18n="common.knicks">Knicks</span>
+            
+          </td>
+        </tr>
+        
+        
+        <tr>
+          <td class="font-mono font-bold">4-2</td>
+          <td>4</td>
+          <td>2</td>
+          <td>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                <div style="width: 3.0%; height: 100%; background: var(--spurs-primary); border-radius: 3px;"></div>
+              </div>
+              <span class="font-mono">3.0%</span>
+            </div>
+          </td>
+          <td>
+            
+              <span class="text-spurs font-bold" data-i18n="common.spurs">Spurs</span>
+            
+          </td>
+        </tr>
+        
+        
+        <tr>
+          <td class="font-mono font-bold">4-3</td>
+          <td>4</td>
+          <td>3</td>
+          <td>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                <div style="width: 11.2%; height: 100%; background: var(--spurs-primary); border-radius: 3px;"></div>
+              </div>
+              <span class="font-mono">11.2%</span>
+            </div>
+          </td>
+          <td>
+            
+              <span class="text-spurs font-bold" data-i18n="common.spurs">Spurs</span>
+            
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <!-- How It Works -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title" data-i18n="sim.how_it_works">How the Simulation Works</h3>
+    </div>
+
+    <div class="grid-2" style="gap: 1.5rem;">
+      <div>
+        <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;" data-i18n="sim.monte_title">🔢 Monte Carlo Method</h4>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);" data-i18n="sim.monte_desc">
+          We simulate the remaining series 10,000 times. In each simulation, every game is decided by a random number compared to the predicted win probability. This gives us a distribution of all possible outcomes.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="color: var(--accent-orange); margin-bottom: 0.5rem;" data-i18n="sim.dynamic_title">📊 Dynamic Probabilities</h4>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);" data-i18n="sim.dynamic_desc">
+          Win probabilities change based on series state. A team facing elimination gets a "desperation boost." A team trying to close out may feel additional pressure. Home court advantage is factored in.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;" data-i18n="sim.multifactor_title">⚖️ Multi-Factor Model</h4>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);" data-i18n="sim.multifactor_desc">
+          Each game prediction combines Elo ratings, team offensive/defensive efficiency, home court advantage, series momentum, historical data, and desperation factors.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="color: var(--accent-purple); margin-bottom: 0.5rem;" data-i18n="sim.confidence_title">📈 Statistical Confidence</h4>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);" data-i18n="sim.confidence_desc">
+          With 10,000 simulations, the results have high statistical confidence. The most likely outcome and probability distribution are reliable indicators of the series trajectory.
+        </p>
+      </div>
+    </div>
+
+    <div class="historical-note">
+      <strong data-i18n="sim.note">Note:</strong>
+      <span data-i18n="sim.note_text">This simulation uses the 2-3-2 Finals format where Games 1-2, 6-7 are in San Antonio and Games 3-5 are in New York. The Spurs' historical perfection in Finals (5-0) is factored in as a small adjustment, though the 0-2 deficit makes their path extremely difficult.</span>
+    </div>
+  </div>
+
+</div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.03); margin-top: 3rem;">
+    <p data-i18n="footer.desc">2026 NBA Finals Predictor &mdash; Data-driven predictions using Elo ratings, team statistics, and Monte Carlo simulation</p>
+    <p style="margin-top: 0.5rem;" data-i18n="footer.series">Spurs vs Knicks &bull; Series: Knicks lead 2-0</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="static/js/charts.js"></script>
+  <script src="static/js/i18n.js"></script>
+  <script src="static/js/main.js"></script>
+  
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  I18N.init();
+
+  // Game-by-game probability
+  const gameLabels = ['Game 3', 'Game 4', 'Game 5', 'Game 6', 'Game 7'];
+
+  const spursProbs = [
+    19.3,
+    16.3,
+    19.3,
+    11.3,
+    11.3,
+  ];
+
+  const knicksProbs = spursProbs.map(p => (100 - p).toFixed(1));
+
+  createGameProbChart('gameProbChart', gameLabels, spursProbs, knicksProbs);
+
+  // Outcome distribution
+  const outcomeProbs = {"0-4": 41.1, "1-4": 29.0, "2-4": 9.2, "3-4": 6.5, "4-2": 3.0, "4-3": 11.2};
+  createOutcomeChart('outcomeChart', outcomeProbs);
+});
+</script>
+
+
+</body>
+</html>

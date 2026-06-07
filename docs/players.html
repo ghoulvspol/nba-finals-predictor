@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player Matchups - 2026 NBA Finals</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="static/css/style.css">
+
+  
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <span class="icon">🏀</span>
+        <span data-i18n="nav.brand">NBA Finals 2026</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <ul class="navbar-links">
+          <li><a href="index.html" data-i18n="nav.overview">Series Overview</a></li>
+          <li><a href="predictions.html" data-i18n="nav.predictions">Predictions</a></li>
+          <li><a href="players.html" data-i18n="nav.players">Players</a></li>
+          <li><a href="simulator.html" data-i18n="nav.simulator">Simulator</a></li>
+        </ul>
+        <button id="lang-toggle" class="lang-toggle" onclick="I18N.toggle()" title="切换到中文">中</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    
+<div class="container">
+
+  <div class="section-header" style="margin-top: 2rem;">
+    <h1 class="section-title" data-i18n="players.title">Player Matchups</h1>
+    <p class="section-subtitle" data-i18n="players.subtitle">Key player comparisons and matchup analysis for the 2026 NBA Finals</p>
+  </div>
+
+  <!-- Player Impact Overview -->
+  <section style="margin-bottom: 2rem;">
+    <div class="card" style="border: 1px solid rgba(0, 212, 255, 0.15); box-shadow: var(--shadow-glow-blue);">
+      <div class="card-header">
+        <h3 class="card-title">📊 Player Impact Score (Finals)</h3>
+        <span class="card-badge">Prediction Factor</span>
+      </div>
+      <div class="grid-2" style="align-items: center;">
+        <div>
+          <div class="prob-bar" style="height: 40px;">
+            <div class="prob-fill spurs" style="width: 48.7%">
+              61.95
+            </div>
+            <div class="prob-fill knicks" style="width: 51.3%">
+              65.24
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+            <span class="text-spurs font-bold">Spurs</span>
+            <span class="text-knicks font-bold">Knicks</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.75rem;">
+            Weighted average of Finals performance, playoffs stats, and recent form. Higher = stronger player contribution.
+          </p>
+        </div>
+        <div>
+          <table class="weights-table" style="font-size: 0.8rem;">
+            <thead><tr><th>Metric</th><th>Weight</th></tr></thead>
+            <tbody>
+              <tr><td>Scoring (PPG)</td><td class="weight-pct">30%</td></tr>
+              <tr><td>Rebounding (RPG)</td><td class="weight-pct">20%</td></tr>
+              <tr><td>Playmaking (APG)</td><td class="weight-pct">20%</td></tr>
+              <tr><td>Defense (BLK+STL)</td><td class="weight-pct">15%</td></tr>
+              <tr><td>Efficiency (FG%)</td><td class="weight-pct">15%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Matchup Analysis -->
+  <section>
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="players.head_to_head">Head-to-Head Matchups</h2>
+      <p class="section-subtitle" data-i18n="players.position_breakdown">Position-by-position breakdown with edge analysis</p>
+    </div>
+
+    
+    <div class="matchup-card">
+      <div class="matchup-header">
+        <div class="matchup-position">PG</div>
+      </div>
+
+      <div class="matchup-players">
+        <div class="matchup-player">
+          <div class="matchup-player-name text-spurs">De'Aaron Fox</div>
+          <div class="matchup-player-stats">
+            18.6 PPG &bull; 3.8 RPG &bull; 6.2 APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: 20.5 &bull; TS%: 56.5%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: 22.0/3.5/6.0
+            
+              <span style="color: var(--accent-green);">📈</span>
+            
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            All-Star Guard
+          </div>
+        </div>
+
+        <div style="min-width: 100px;">
+          <div class="matchup-edge knicks">
+            <span data-i18n="players.knicks_edge">Knicks Edge</span>
+            
+          </div>
+        </div>
+
+        <div class="matchup-player">
+          <div class="matchup-player-name text-knicks">Jalen Brunson</div>
+          <div class="matchup-player-stats">
+            26.0 PPG &bull; 3.3 RPG &bull; 6.8 APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: 24.8 &bull; TS%: 59.5%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: 29.0/3.0/8.0
+            
+              <span style="color: var(--accent-green);">📈</span>
+            
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            Captain & All-Star
+          </div>
+        </div>
+      </div>
+
+      <div class="matchup-analysis">
+        Brunson has been the best player in the Finals so far. Fox needs to match his scoring to keep the Spurs in it.
+      </div>
+    </div>
+    
+    <div class="matchup-card">
+      <div class="matchup-header">
+        <div class="matchup-position">C</div>
+      </div>
+
+      <div class="matchup-players">
+        <div class="matchup-player">
+          <div class="matchup-player-name text-spurs">Victor Wembanyama</div>
+          <div class="matchup-player-stats">
+            25.0 PPG &bull; 11.5 RPG &bull; 3.1 APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: 28.5 &bull; TS%: 60.8%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: 24.5/12.5/3.0
+            
+              <span>➡️</span>
+            
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            Franchise Star
+          </div>
+        </div>
+
+        <div style="min-width: 100px;">
+          <div class="matchup-edge spurs">
+            <span data-i18n="players.spurs_edge">Spurs Edge</span>
+            
+          </div>
+        </div>
+
+        <div class="matchup-player">
+          <div class="matchup-player-name text-knicks">Karl-Anthony Towns</div>
+          <div class="matchup-player-stats">
+            20.1 PPG &bull; 11.9 RPG &bull; 3.0 APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: 22.5 &bull; TS%: 61.8%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: 22.0/12.0/3.5
+            
+              <span style="color: var(--accent-green);">📈</span>
+            
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            All-Star Big
+          </div>
+        </div>
+      </div>
+
+      <div class="matchup-analysis">
+        Wembanyama's defensive impact (3.8 BPG) is unmatched. Towns provides spacing but can't match Victor's rim protection.
+      </div>
+    </div>
+    
+    <div class="matchup-card">
+      <div class="matchup-header">
+        <div class="matchup-position">SF</div>
+      </div>
+
+      <div class="matchup-players">
+        <div class="matchup-player">
+          <div class="matchup-player-name text-spurs">Devin Vassell</div>
+          <div class="matchup-player-stats">
+            13.9 PPG &bull; 4.0 RPG &bull; 2.5 APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: 14.5 &bull; TS%: 55.5%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: 11.0/4.0/2.0
+            
+              <span style="color: var(--accent-red);">📉</span>
+            
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            3&D Wing
+          </div>
+        </div>
+
+        <div style="min-width: 100px;">
+          <div class="matchup-edge knicks">
+            <span data-i18n="players.knicks_edge">Knicks Edge</span>
+            
+          </div>
+        </div>
+
+        <div class="matchup-player">
+          <div class="matchup-player-name text-knicks">OG Anunoby</div>
+          <div class="matchup-player-stats">
+            16.7 PPG &bull; 5.2 RPG &bull; 2.2 APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: 18.0 &bull; TS%: 59.5%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: 20.0/5.5/2.0
+            
+              <span style="color: var(--accent-green);">📈</span>
+            
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            Elite 3&D
+          </div>
+        </div>
+      </div>
+
+      <div class="matchup-analysis">
+        Anunoby's lockdown defense on Wembanyama has been critical. Johnson needs to provide more secondary scoring.
+      </div>
+    </div>
+    
+    <div class="matchup-card">
+      <div class="matchup-header">
+        <div class="matchup-position">SG</div>
+      </div>
+
+      <div class="matchup-players">
+        <div class="matchup-player">
+          <div class="matchup-player-name text-spurs">Stephon Castle</div>
+          <div class="matchup-player-stats">
+            16.7 PPG &bull; 5.3 RPG &bull; 7.4 APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: 18.2 &bull; TS%: 55.8%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: 15.0/4.5/5.0
+            
+              <span style="color: var(--accent-red);">📉</span>
+            
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            Rising Star
+          </div>
+        </div>
+
+        <div style="min-width: 100px;">
+          <div class="matchup-edge even">
+            <span data-i18n="players.even">Even</span>
+          </div>
+        </div>
+
+        <div class="matchup-player">
+          <div class="matchup-player-name text-knicks">Mikal Bridges</div>
+          <div class="matchup-player-stats">
+            14.4 PPG &bull; 3.8 RPG &bull; 3.7 APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: 15.0 &bull; TS%: 58.8%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: 15.0/4.0/3.0
+            
+              <span style="color: var(--accent-green);">📈</span>
+            
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            Iron Man
+          </div>
+        </div>
+      </div>
+
+      <div class="matchup-analysis">
+        Both are athletic two-way guards. Castle has shown flashes but Bridges' experience is showing in the Finals.
+      </div>
+    </div>
+    
+    <div class="matchup-card">
+      <div class="matchup-header">
+        <div class="matchup-position">PF</div>
+      </div>
+
+      <div class="matchup-players">
+        <div class="matchup-player">
+          <div class="matchup-player-name text-spurs">Keldon Johnson</div>
+          <div class="matchup-player-stats">
+            13.2 PPG &bull; 5.4 RPG &bull; 1.4 APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: 13.8 &bull; TS%: 59.0%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: 7.5/3.0/1.0
+            
+              <span style="color: var(--accent-red);">📉</span>
+            
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            Energy Forward
+          </div>
+        </div>
+
+        <div style="min-width: 100px;">
+          <div class="matchup-edge knicks">
+            <span data-i18n="players.knicks_edge">Knicks Edge</span>
+            
+          </div>
+        </div>
+
+        <div class="matchup-player">
+          <div class="matchup-player-name text-knicks">Josh Hart</div>
+          <div class="matchup-player-stats">
+            12.0 PPG &bull; 7.4 RPG &bull; 4.8 APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: 15.2 &bull; TS%: 57.5%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: 12.0/10.0/5.0
+            
+              <span>➡️</span>
+            
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            Glue Guy
+          </div>
+        </div>
+      </div>
+
+      <div class="matchup-analysis">
+        Hart's rebounding and hustle plays have been a difference-maker. Sochan needs to be more aggressive on offense.
+      </div>
+    </div>
+    
+  </section>
+
+  <!-- Spurs Roster with Advanced Stats -->
+  <section style="margin-top: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title text-spurs" data-i18n="players.spurs_roster">San Antonio Spurs</h2>
+      <p class="section-subtitle">62-20 &bull; <span data-i18n="hero.west">West</span> #1</p>
+    </div>
+
+    <div class="grid-3">
+      
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number spurs">1</div>
+          <div>
+            <div class="player-name">Victor Wembanyama</div>
+            <div class="player-position">C/F &bull; Age 22</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">25.0</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">11.5</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">3.1</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">3.1</div>
+            <div class="player-stat-label">BPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">51.2%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">34.9%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">28.5</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">8.2</strong></span>
+            <span>Usage: <strong>30.5%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>24.5 PPG</span>
+            <span style="color: var(--text-muted);">
+              -0.5
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          7'4" generational talent, 2x DPOY candidate, elite two-way impact
+        </div>
+      </div>
+      
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number spurs">5</div>
+          <div>
+            <div class="player-name">De'Aaron Fox</div>
+            <div class="player-position">PG &bull; Age 28</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">18.6</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">3.8</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">6.2</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">0.3</div>
+            <div class="player-stat-label">BPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">48.6%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">33.2%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">20.5</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">4.2</strong></span>
+            <span>Usage: <strong>25.5%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>22.0 PPG</span>
+            <span style="color: var(--accent-green);">
+              +3.4
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          Elite speed and playmaking, acquired from Sacramento
+        </div>
+      </div>
+      
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number spurs">5</div>
+          <div>
+            <div class="player-name">Stephon Castle</div>
+            <div class="player-position">SG &bull; Age 21</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">16.7</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">5.3</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">7.4</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">0.3</div>
+            <div class="player-stat-label">BPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">47.1%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">33.2%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">18.2</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">3.5</strong></span>
+            <span>Usage: <strong>22.5%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>15.0 PPG</span>
+            <span style="color: var(--accent-red);">
+              -1.7
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          2024 #4 pick, elite playmaking for a sophomore, two-way guard
+        </div>
+      </div>
+      
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number spurs">24</div>
+          <div>
+            <div class="player-name">Devin Vassell</div>
+            <div class="player-position">SF &bull; Age 25</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">13.9</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">4.0</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">2.5</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">0.4</div>
+            <div class="player-stat-label">BPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">43.7%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">38.4%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">14.5</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">1.5</strong></span>
+            <span>Usage: <strong>19.5%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>11.0 PPG</span>
+            <span style="color: var(--accent-red);">
+              -2.9
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          Reliable shooter and perimeter defender
+        </div>
+      </div>
+      
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number spurs">3</div>
+          <div>
+            <div class="player-name">Keldon Johnson</div>
+            <div class="player-position">PF &bull; Age 26</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">13.2</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">5.4</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">1.4</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">0.1</div>
+            <div class="player-stat-label">BPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">51.9%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">36.3%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">13.8</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">0.8</strong></span>
+            <span>Usage: <strong>17.8%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>7.5 PPG</span>
+            <span style="color: var(--accent-red);">
+              -5.7
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          Athletic forward, high efficiency around the rim
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Knicks Roster with Advanced Stats -->
+  <section style="margin-top: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title text-knicks" data-i18n="players.knicks_roster">New York Knicks</h2>
+      <p class="section-subtitle">53-29 &bull; <span data-i18n="hero.east">East</span> #2</p>
+    </div>
+
+    <div class="grid-3">
+      
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number knicks">11</div>
+          <div>
+            <div class="player-name">Jalen Brunson</div>
+            <div class="player-position">PG &bull; Age 29</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">26.0</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">3.3</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">6.8</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">0.8</div>
+            <div class="player-stat-label">SPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">46.7%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">36.9%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">24.8</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">6.8</strong></span>
+            <span>Usage: <strong>29.8%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>29.0 PPG</span>
+            <span style="color: var(--accent-green);">
+              +3.0
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          Elite mid-range scorer and floor general, Finals MVP frontrunner
+        </div>
+      </div>
+      
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number knicks">32</div>
+          <div>
+            <div class="player-name">Karl-Anthony Towns</div>
+            <div class="player-position">C &bull; Age 30</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">20.1</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">11.9</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">3.0</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">0.9</div>
+            <div class="player-stat-label">SPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">50.1%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">36.8%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">22.5</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">5.8</strong></span>
+            <span>Usage: <strong>24.8%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>22.0 PPG</span>
+            <span style="color: var(--accent-green);">
+              +1.9
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          Elite shooting big man, dominant rebounder
+        </div>
+      </div>
+      
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number knicks">8</div>
+          <div>
+            <div class="player-name">OG Anunoby</div>
+            <div class="player-position">SF &bull; Age 28</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">16.7</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">5.2</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">2.2</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">1.6</div>
+            <div class="player-stat-label">SPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">48.4%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">38.6%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">18.0</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">4.5</strong></span>
+            <span>Usage: <strong>20.5%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>20.0 PPG</span>
+            <span style="color: var(--accent-green);">
+              +3.3
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          Lockdown defender, elite catch-and-shoot, Wembanyama stopper
+        </div>
+      </div>
+      
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number knicks">25</div>
+          <div>
+            <div class="player-name">Mikal Bridges</div>
+            <div class="player-position">SG &bull; Age 29</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">14.4</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">3.8</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">3.7</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">1.3</div>
+            <div class="player-stat-label">SPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">49.0%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">37.1%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">15.0</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">2.8</strong></span>
+            <span>Usage: <strong>18.5%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>15.0 PPG</span>
+            <span style="color: var(--accent-green);">
+              +0.6
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          Durable two-way wing, elite perimeter defense
+        </div>
+      </div>
+      
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number knicks">3</div>
+          <div>
+            <div class="player-name">Josh Hart</div>
+            <div class="player-position">SF/PF &bull; Age 31</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">12.0</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">7.4</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">4.8</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">1.1</div>
+            <div class="player-stat-label">SPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">50.8%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">41.3%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">15.2</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">3.2</strong></span>
+            <span>Usage: <strong>16.5%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>12.0 PPG</span>
+            <span style="color: var(--text-muted);">
+              0.0
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          Elite rebounder for position, high IQ connector, hustle plays
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Star Comparison Chart -->
+  <section style="margin-top: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="players.star_compare">Star Player Comparison</h2>
+      <p class="section-subtitle" data-i18n="players.star_subtitle">Wembanyama vs Brunson - Franchise cornerstones</p>
+    </div>
+
+    <div class="card">
+      <div style="height: 400px;">
+        <canvas id="starRadarChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.03); margin-top: 3rem;">
+    <p data-i18n="footer.desc">2026 NBA Finals Predictor &mdash; Data-driven predictions using Elo ratings, team statistics, and Monte Carlo simulation</p>
+    <p style="margin-top: 0.5rem;" data-i18n="footer.series">Spurs vs Knicks &bull; Series: Knicks lead 2-0</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="static/js/charts.js"></script>
+  <script src="static/js/i18n.js"></script>
+  <script src="static/js/main.js"></script>
+  
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  I18N.init();
+
+  const wembyStats = [
+    25.0 / 35 * 100,
+    11.5 / 15 * 100,
+    3.1 / 10 * 100,
+    1.0 / 3 * 100,
+    3.1 / 5 * 100,
+    51.2 / 60 * 100,
+  ];
+
+  const brunsonStats = [
+    26.0 / 35 * 100,
+    3.3 / 15 * 100,
+    6.8 / 10 * 100,
+    0.8 / 3 * 100,
+    0,
+    46.7 / 60 * 100,
+  ];
+
+  createPlayerRadarChart('starRadarChart', 'Wembanyama', wembyStats, 'Brunson', brunsonStats);
+});
+</script>
+
+
+</body>
+</html>
