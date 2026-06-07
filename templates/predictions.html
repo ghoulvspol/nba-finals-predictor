@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block title %}Game Predictions - 2026 NBA Finals{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="section-header" style="margin-top: 2rem;">
+    <h1 class="section-title" data-i18n="pred_page.title">Game Predictions</h1>
+    <p class="section-subtitle" data-i18n="pred_page.subtitle">AI-powered predictions for each remaining game in the 2026 NBA Finals</p>
+  </div>
+
+  <!-- Current Series State -->
+  <div class="card" style="margin-bottom: 2rem;">
+    <div class="card-header">
+      <h3 class="card-title" data-i18n="pred_page.current_state">Current Series State</h3>
+      <span class="card-badge" data-i18n="pred_page.knicks_lead">Knicks lead 2-0</span>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem;">
+      <div style="text-align: center;">
+        <div class="font-bold text-spurs" style="font-size: 1.1rem;" data-i18n="common.spurs">Spurs</div>
+        <div class="font-mono" style="font-size: 3rem; font-weight: 900; color: var(--spurs-primary);">{{ series.spurs_wins }}</div>
+      </div>
+      <div class="text-muted" style="font-size: 1.5rem;">&ndash;</div>
+      <div style="text-align: center;">
+        <div class="font-bold text-knicks" style="font-size: 1.1rem;" data-i18n="common.knicks">Knicks</div>
+        <div class="font-mono" style="font-size: 3rem; font-weight: 900; color: var(--knicks-secondary);">{{ series.knicks_wins }}</div>
+      </div>
+    </div>
+
+    <div class="historical-note" style="margin-top: 1rem;">
+      <strong data-i18n="pred_page.history">History:</strong>
+      <span data-i18n="pred_page.history_text">Teams trailing 0-2 in the Finals have come back only 5.7% of the time. The 2-3-2 format now sends the series to MSG for three straight games (Games 3-5).</span>
+    </div>
+  </div>
+
+  <!-- Game-by-Game Predictions -->
+  <div class="section-header">
+    <h2 class="section-title" data-i18n="pred_page.remaining">Remaining Game Predictions</h2>
+  </div>
+
+  <div class="grid-2">
+    {% for pred in predictions %}
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number"><span data-i18n="common.game">Game</span> {{ pred.game }}</span>
+        <span class="game-date">{{ pred.date }}</span>
+      </div>
+      <div class="game-card-body">
+        <div class="game-location">📍 {{ pred.location }}</div>
+
+        <!-- Win Probability -->
+        <div class="game-teams">
+          <div class="game-team">
+            <div class="game-team-name {% if pred.home == 'spurs' %}text-spurs{% else %}text-knicks{% endif %}">
+              {{ teams[pred.home].abbr }} (<span data-i18n="pred_page.home">Home</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: {% if pred.home == 'spurs' %}var(--spurs-primary){% else %}var(--knicks-primary){% endif %};">
+              {{ pred.home_win_prob }}%
+            </div>
+          </div>
+          <div class="game-vs" data-i18n="common.vs">vs</div>
+          <div class="game-team">
+            <div class="game-team-name {% if pred.away == 'spurs' %}text-spurs{% else %}text-knicks{% endif %}">
+              {{ teams[pred.away].abbr }} (<span data-i18n="pred_page.away">Away</span>)
+            </div>
+            <div class="game-team-prob font-mono" style="color: {% if pred.away == 'spurs' %}var(--spurs-primary){% else %}var(--knicks-primary){% endif %};">
+              {{ pred.away_win_prob }}%
+            </div>
+          </div>
+        </div>
+
+        <!-- Probability Bar -->
+        <div class="prob-bar" style="height: 12px;">
+          <div class="prob-fill {% if pred.home == 'spurs' %}spurs{% else %}knicks{% endif %}" style="width: {{ pred.home_win_prob }}%"></div>
+          <div class="prob-fill {% if pred.away == 'spurs' %}spurs{% else %}knicks{% endif %}" style="width: {{ pred.away_win_prob }}%"></div>
+        </div>
+
+        <!-- Predicted Score -->
+        <div class="game-prediction">
+          <div class="text-muted" style="font-size: 0.75rem; margin-bottom: 0.25rem;" data-i18n="pred_page.predicted_score">Predicted Final Score</div>
+          <div class="predicted-score" style="font-size: 1.5rem;">
+            <span style="color: {% if pred.home == 'spurs' %}var(--spurs-primary){% else %}var(--knicks-primary){% endif %};">{{ pred.predicted_home_score }}</span>
+            <span class="text-muted"> - </span>
+            <span style="color: {% if pred.away == 'spurs' %}var(--spurs-primary){% else %}var(--knicks-primary){% endif %};">{{ pred.predicted_away_score }}</span>
+          </div>
+        </div>
+
+        <!-- Key Factors -->
+        <div style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="pred_page.key_factors">Key Factors</div>
+          <ul class="factor-list">
+            {% for factor in pred.key_factors %}
+            <li>{{ factor }}</li>
+            {% endfor %}
+          </ul>
+          {% if pred.player_insights %}
+          <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.03);">
+            <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em;">Player Data Insights</div>
+            {% for insight in pred.player_insights %}
+            <div style="font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0;">{{ insight }}</div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Scenario Analysis -->
+  <section style="margin-top: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="pred_page.scenario">Scenario Analysis</h2>
+      <p class="section-subtitle" data-i18n="pred_page.scenario_subtitle">How Game 3 outcome affects the rest of the series</p>
+    </div>
+
+    <div class="grid-2">
+      {% for scenario in scenarios %}
+      <div class="scenario-card">
+        <div class="scenario-title">{{ scenario.condition }}</div>
+        <div class="scenario-state">Series: Spurs {{ scenario.series_state }} Knicks</div>
+        <div class="stat-comparison" style="margin-top: 1rem;">
+          <div class="stat-label">
+            <span>Game 4 Home Win Probability</span>
+            <span class="font-mono font-bold">{{ scenario.next_game_prob }}%</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-bar spurs" style="width: {{ scenario.next_game_prob }}%"></div>
+          </div>
+        </div>
+        <div class="scenario-note">{{ scenario.note }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Model Methodology -->
+  <section style="margin-top: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="pred_page.method_title">Prediction Methodology</h2>
+    </div>
+
+    <div class="card">
+      <div class="grid-3" style="gap: 1.5rem;">
+        <div>
+          <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;" data-i18n="pred_page.method_elo_title">📊 Elo Rating System</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);" data-i18n="pred_page.method_elo_desc">
+            Each team has an Elo rating that updates based on game results. Home court adds ~100 Elo points (roughly 3-4% win probability). Playoff experience and historical Finals success are factored in.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: var(--accent-orange); margin-bottom: 0.5rem;" data-i18n="pred_page.method_stats_title">📈 Team Statistics</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);" data-i18n="pred_page.method_stats_desc">
+            Offensive and defensive efficiency ratings, pace, shooting percentages, and rebounding rates are combined into a composite strength score. Weighted toward recent performance.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: var(--accent-purple); margin-bottom: 0.5rem;" data-i18n="pred_page.method_monte_title">🎲 Monte Carlo Simulation</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);" data-i18n="pred_page.method_monte_desc">
+            10,000 simulations of the remaining series, each using the per-game probabilities. Accounts for series dynamics like desperation, momentum, and close-out pressure.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  I18N.init();
+});
+</script>
+{% endblock %}

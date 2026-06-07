@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+{% block title %}Player Matchups - 2026 NBA Finals{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="section-header" style="margin-top: 2rem;">
+    <h1 class="section-title" data-i18n="players.title">Player Matchups</h1>
+    <p class="section-subtitle" data-i18n="players.subtitle">Key player comparisons and matchup analysis for the 2026 NBA Finals</p>
+  </div>
+
+  <!-- Player Impact Overview -->
+  <section style="margin-bottom: 2rem;">
+    <div class="card" style="border: 1px solid rgba(0, 212, 255, 0.15); box-shadow: var(--shadow-glow-blue);">
+      <div class="card-header">
+        <h3 class="card-title">📊 Player Impact Score (Finals)</h3>
+        <span class="card-badge">Prediction Factor</span>
+      </div>
+      <div class="grid-2" style="align-items: center;">
+        <div>
+          <div class="prob-bar" style="height: 40px;">
+            <div class="prob-fill spurs" style="width: {{ (spurs_impact.team_impact / (spurs_impact.team_impact + knicks_impact.team_impact) * 100)|round(1) }}%">
+              {{ spurs_impact.team_impact }}
+            </div>
+            <div class="prob-fill knicks" style="width: {{ (knicks_impact.team_impact / (spurs_impact.team_impact + knicks_impact.team_impact) * 100)|round(1) }}%">
+              {{ knicks_impact.team_impact }}
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+            <span class="text-spurs font-bold">Spurs</span>
+            <span class="text-knicks font-bold">Knicks</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.75rem;">
+            Weighted average of Finals performance, playoffs stats, and recent form. Higher = stronger player contribution.
+          </p>
+        </div>
+        <div>
+          <table class="weights-table" style="font-size: 0.8rem;">
+            <thead><tr><th>Metric</th><th>Weight</th></tr></thead>
+            <tbody>
+              <tr><td>Scoring (PPG)</td><td class="weight-pct">30%</td></tr>
+              <tr><td>Rebounding (RPG)</td><td class="weight-pct">20%</td></tr>
+              <tr><td>Playmaking (APG)</td><td class="weight-pct">20%</td></tr>
+              <tr><td>Defense (BLK+STL)</td><td class="weight-pct">15%</td></tr>
+              <tr><td>Efficiency (FG%)</td><td class="weight-pct">15%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Matchup Analysis -->
+  <section>
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="players.head_to_head">Head-to-Head Matchups</h2>
+      <p class="section-subtitle" data-i18n="players.position_breakdown">Position-by-position breakdown with edge analysis</p>
+    </div>
+
+    {% for matchup in matchups %}
+    <div class="matchup-card">
+      <div class="matchup-header">
+        <div class="matchup-position">{{ matchup.position }}</div>
+      </div>
+
+      <div class="matchup-players">
+        <div class="matchup-player">
+          <div class="matchup-player-name text-spurs">{{ matchup.spurs_player.name }}</div>
+          <div class="matchup-player-stats">
+            {{ matchup.spurs_player.ppg }} PPG &bull; {{ matchup.spurs_player.rpg }} RPG &bull; {{ matchup.spurs_player.apg }} APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: {{ matchup.spurs_player.advanced.per }} &bull; TS%: {{ "%.1f"|format(matchup.spurs_player.advanced.ts_pct * 100) }}%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: {{ matchup.spurs_player.finals.ppg }}/{{ matchup.spurs_player.finals.rpg }}/{{ matchup.spurs_player.finals.apg }}
+            {% if matchup.spurs_player.finals.ppg > matchup.spurs_player.ppg %}
+              <span style="color: var(--accent-green);">📈</span>
+            {% elif matchup.spurs_player.finals.ppg < matchup.spurs_player.ppg - 1 %}
+              <span style="color: var(--accent-red);">📉</span>
+            {% else %}
+              <span>➡️</span>
+            {% endif %}
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            {{ matchup.spurs_player.role }}
+          </div>
+        </div>
+
+        <div style="min-width: 100px;">
+          <div class="matchup-edge {{ matchup.edge }}">
+            {% if matchup.edge == 'spurs' %}<span data-i18n="players.spurs_edge">Spurs Edge</span>
+            {% elif matchup.edge == 'knicks' %}<span data-i18n="players.knicks_edge">Knicks Edge</span>
+            {% else %}<span data-i18n="players.even">Even</span>{% endif %}
+          </div>
+        </div>
+
+        <div class="matchup-player">
+          <div class="matchup-player-name text-knicks">{{ matchup.knicks_player.name }}</div>
+          <div class="matchup-player-stats">
+            {{ matchup.knicks_player.ppg }} PPG &bull; {{ matchup.knicks_player.rpg }} RPG &bull; {{ matchup.knicks_player.apg }} APG
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-muted);">
+            PER: {{ matchup.knicks_player.advanced.per }} &bull; TS%: {{ "%.1f"|format(matchup.knicks_player.advanced.ts_pct * 100) }}%
+          </div>
+          <div style="margin-top: 0.25rem; font-size: 0.75rem;">
+            Finals: {{ matchup.knicks_player.finals.ppg }}/{{ matchup.knicks_player.finals.rpg }}/{{ matchup.knicks_player.finals.apg }}
+            {% if matchup.knicks_player.finals.ppg > matchup.knicks_player.ppg %}
+              <span style="color: var(--accent-green);">📈</span>
+            {% elif matchup.knicks_player.finals.ppg < matchup.knicks_player.ppg - 1 %}
+              <span style="color: var(--accent-red);">📉</span>
+            {% else %}
+              <span>➡️</span>
+            {% endif %}
+          </div>
+          <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+            {{ matchup.knicks_player.role }}
+          </div>
+        </div>
+      </div>
+
+      <div class="matchup-analysis">
+        {{ matchup.analysis }}
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+
+  <!-- Spurs Roster with Advanced Stats -->
+  <section style="margin-top: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title text-spurs" data-i18n="players.spurs_roster">San Antonio Spurs</h2>
+      <p class="section-subtitle">{{ teams.spurs.regular_season_record }} &bull; <span data-i18n="hero.west">West</span> #{{ teams.spurs.seed }}</p>
+    </div>
+
+    <div class="grid-3">
+      {% for player in spurs_players %}
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number spurs">{{ player.number }}</div>
+          <div>
+            <div class="player-name">{{ player.name }}</div>
+            <div class="player-position">{{ player.position }} &bull; Age {{ player.age }}</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">{{ player.ppg }}</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">{{ player.rpg }}</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">{{ player.apg }}</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">{{ player.bpg }}</div>
+            <div class="player-stat-label">BPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">{{ "%.1f"|format(player.fg_pct * 100) }}%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">{{ "%.1f"|format(player.three_pct * 100) }}%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">{{ player.advanced.per }}</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">{{ player.advanced.bpm }}</strong></span>
+            <span>Usage: <strong>{{ "%.1f"|format(player.advanced.usage * 100) }}%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>{{ player.finals.ppg }} PPG</span>
+            <span style="color: {% if player.finals.ppg > player.ppg %}var(--accent-green){% elif player.finals.ppg < player.ppg - 1 %}var(--accent-red){% else %}var(--text-muted){% endif %};">
+              {% if player.finals.ppg > player.ppg %}+{% endif %}{{ "%.1f"|format(player.finals.ppg - player.ppg) }}
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          {{ player.description }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Knicks Roster with Advanced Stats -->
+  <section style="margin-top: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title text-knicks" data-i18n="players.knicks_roster">New York Knicks</h2>
+      <p class="section-subtitle">{{ teams.knicks.regular_season_record }} &bull; <span data-i18n="hero.east">East</span> #{{ teams.knicks.seed }}</p>
+    </div>
+
+    <div class="grid-3">
+      {% for player in knicks_players %}
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-number knicks">{{ player.number }}</div>
+          <div>
+            <div class="player-name">{{ player.name }}</div>
+            <div class="player-position">{{ player.position }} &bull; Age {{ player.age }}</div>
+          </div>
+        </div>
+
+        <div class="player-stats">
+          <div class="player-stat">
+            <div class="player-stat-value">{{ player.ppg }}</div>
+            <div class="player-stat-label">PPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">{{ player.rpg }}</div>
+            <div class="player-stat-label">RPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">{{ player.apg }}</div>
+            <div class="player-stat-label">APG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">{{ player.spg }}</div>
+            <div class="player-stat-label">SPG</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">{{ "%.1f"|format(player.fg_pct * 100) }}%</div>
+            <div class="player-stat-label">FG%</div>
+          </div>
+          <div class="player-stat">
+            <div class="player-stat-value">{{ "%.1f"|format(player.three_pct * 100) }}%</div>
+            <div class="player-stat-label">3P%</div>
+          </div>
+        </div>
+
+        <!-- Advanced Stats -->
+        <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+            <span>PER: <strong style="color: var(--accent-blue);">{{ player.advanced.per }}</strong></span>
+            <span>BPM: <strong style="color: var(--accent-green);">{{ player.advanced.bpm }}</strong></span>
+            <span>Usage: <strong>{{ "%.1f"|format(player.advanced.usage * 100) }}%</strong></span>
+          </div>
+        </div>
+
+        <!-- Finals vs Season -->
+        <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;">Finals (2 games) vs Season</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+            <span>{{ player.finals.ppg }} PPG</span>
+            <span style="color: {% if player.finals.ppg > player.ppg %}var(--accent-green){% elif player.finals.ppg < player.ppg - 1 %}var(--accent-red){% else %}var(--text-muted){% endif %};">
+              {% if player.finals.ppg > player.ppg %}+{% endif %}{{ "%.1f"|format(player.finals.ppg - player.ppg) }}
+            </span>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary);">
+          {{ player.description }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Star Comparison Chart -->
+  <section style="margin-top: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="players.star_compare">Star Player Comparison</h2>
+      <p class="section-subtitle" data-i18n="players.star_subtitle">Wembanyama vs Brunson - Franchise cornerstones</p>
+    </div>
+
+    <div class="card">
+      <div style="height: 400px;">
+        <canvas id="starRadarChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  I18N.init();
+
+  const wembyStats = [
+    {{ spurs_players[0].ppg }} / 35 * 100,
+    {{ spurs_players[0].rpg }} / 15 * 100,
+    {{ spurs_players[0].apg }} / 10 * 100,
+    {{ spurs_players[0].spg }} / 3 * 100,
+    {{ spurs_players[0].bpg }} / 5 * 100,
+    {{ "%.1f"|format(spurs_players[0].fg_pct * 100) }} / 60 * 100,
+  ];
+
+  const brunsonStats = [
+    {{ knicks_players[0].ppg }} / 35 * 100,
+    {{ knicks_players[0].rpg }} / 15 * 100,
+    {{ knicks_players[0].apg }} / 10 * 100,
+    {{ knicks_players[0].spg }} / 3 * 100,
+    0,
+    {{ "%.1f"|format(knicks_players[0].fg_pct * 100) }} / 60 * 100,
+  ];
+
+  createPlayerRadarChart('starRadarChart', 'Wembanyama', wembyStats, 'Brunson', brunsonStats);
+});
+</script>
+{% endblock %}

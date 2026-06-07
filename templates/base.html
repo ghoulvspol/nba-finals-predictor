@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}2026 NBA Finals Predictor{% endblock %}</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/css/style.css">
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="navbar-brand">
+        <span class="icon">🏀</span>
+        <span data-i18n="nav.brand">NBA Finals 2026</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <ul class="navbar-links">
+          <li><a href="/" data-i18n="nav.overview">Series Overview</a></li>
+          <li><a href="/predictions" data-i18n="nav.predictions">Predictions</a></li>
+          <li><a href="/players" data-i18n="nav.players">Players</a></li>
+          <li><a href="/simulator" data-i18n="nav.simulator">Simulator</a></li>
+        </ul>
+        <button id="lang-toggle" class="lang-toggle" onclick="I18N.toggle()" title="切换到中文">中</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.03); margin-top: 3rem;">
+    <p data-i18n="footer.desc">2026 NBA Finals Predictor &mdash; Data-driven predictions using Elo ratings, team statistics, and Monte Carlo simulation</p>
+    <p style="margin-top: 0.5rem;" data-i18n="footer.series">Spurs vs Knicks &bull; Series: Knicks lead 2-0</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/static/js/charts.js"></script>
+  <script src="/static/js/i18n.js"></script>
+  <script src="/static/js/main.js"></script>
+  {% block scripts %}{% endblock %}
+
+</body>
+</html>

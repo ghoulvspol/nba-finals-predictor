@@ -1,0 +1,412 @@
+{% extends "base.html" %}
+{% block title %}Series Overview - 2026 NBA Finals{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Series Hero -->
+  <section class="series-hero">
+    <div class="series-badge" data-i18n="hero.badge">2026 NBA Finals</div>
+    <h1 style="margin-bottom: 0.5rem;" data-i18n="hero.title">Spurs vs Knicks</h1>
+    <p class="text-secondary" data-i18n="hero.format">Best of 7 &bull; 2-3-2 Format</p>
+
+    <div class="series-matchup">
+      <!-- Spurs -->
+      <div class="team-block">
+        <div class="team-logo spurs">SAS</div>
+        <div class="team-name text-spurs" data-i18n="hero.spurs_name">San Antonio Spurs</div>
+        <div class="team-record">{{ teams.spurs.regular_season_record }} &bull; <span data-i18n="hero.west">West</span> #{{ teams.spurs.seed }}</div>
+      </div>
+
+      <!-- Score -->
+      <div class="series-score">
+        <div class="score-display">
+          <span class="spurs-score">{{ series.spurs_wins }}</span>
+          <span class="separator">&ndash;</span>
+          <span class="knicks-score">{{ series.knicks_wins }}</span>
+        </div>
+        <div class="series-status">
+          {% if series.knicks_wins >= 4 %}
+            🏆 <span data-i18n="hero.status.clinch">Knicks win the Championship!</span>
+          {% elif series.spurs_wins >= 4 %}
+            🏆 <span data-i18n="hero.status.clinch">Spurs win the Championship!</span>
+          {% elif series.knicks_wins == 3 %}
+            <span data-i18n="hero.status.clinch">Knicks can clinch in Game</span> {{ series.next_game }}
+          {% elif series.spurs_wins == 0 and series.knicks_wins == 2 %}
+            <span data-i18n="hero.status.next">Next: Game</span> {{ series.next_game }} &bull; <span data-i18n="hero.status.must_win">Spurs must win to stay alive</span>
+          {% else %}
+            <span data-i18n="hero.status.next">Next: Game</span> {{ series.next_game }}
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Knicks -->
+      <div class="team-block">
+        <div class="team-logo knicks">NYK</div>
+        <div class="team-name text-knicks" data-i18n="hero.knicks_name">New York Knicks</div>
+        <div class="team-record">{{ teams.knicks.regular_season_record }} &bull; <span data-i18n="hero.east">East</span> #{{ teams.knicks.seed }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prediction Methodology (Prominent) -->
+  <section class="method-section">
+    <div class="method-card">
+      <div class="card-header">
+        <h3 class="card-title" data-i18n="method.title">🔬 Prediction Methodology</h3>
+        <span class="card-badge" data-i18n="method.subtitle">How our AI model generates predictions</span>
+      </div>
+
+      <!-- Overview -->
+      <div class="method-overview">
+        <div style="font-size: 2rem;">🧠</div>
+        <div>
+          <h4 style="margin-bottom: 0.25rem;" data-i18n="method.overview_title">Model Overview</h4>
+          <p class="method-overview-text" data-i18n="method.overview_desc">Our prediction model combines three complementary approaches to generate accurate game and series predictions.</p>
+        </div>
+      </div>
+
+      <!-- Three Pillars -->
+      <div class="method-grid">
+        <!-- Elo Rating -->
+        <div class="method-item">
+          <h4 style="color: var(--accent-blue);" data-i18n="method.elo_title">Elo Rating System</h4>
+          <p data-i18n="method.elo_desc">Each team has a dynamic Elo rating that updates based on game results. The Elo difference is converted to win probability using the logistic function.</p>
+          <div class="method-formula-label" data-i18n="method.elo_formula">Formula:</div>
+          <div class="method-formula">P(win) = 1 / (1 + 10<sup>(-elo_diff / 400)</sup>)</div>
+          <div class="method-bullet" data-i18n="method.elo_home">Home court adds ~100 Elo points (~3-4% win probability boost)</div>
+          <div class="method-bullet" data-i18n="method.elo_playoff">Playoff bonus: +50 Elo points for series advancement</div>
+        </div>
+
+        <!-- Team Statistics -->
+        <div class="method-item">
+          <h4 style="color: var(--accent-orange);" data-i18n="method.stats_title">Team Statistics Model</h4>
+          <p data-i18n="method.stats_desc">A composite strength score is calculated from multiple team statistics, each weighted by predictive power.</p>
+          <div style="margin-top: 0.75rem;">
+            <div class="method-bullet">OffRtg / DefRtg / NetRtg</div>
+            <div class="method-bullet">FG% / 3P% / FT%</div>
+            <div class="method-bullet">Pace / Rebound% / AST Ratio</div>
+            <div class="method-bullet">eFG% / True Shooting%</div>
+          </div>
+        </div>
+
+        <!-- Monte Carlo -->
+        <div class="method-item">
+          <h4 style="color: var(--accent-purple);" data-i18n="method.monte_title">Monte Carlo Simulation</h4>
+          <p data-i18n="method.monte_desc">10,000 simulations of the remaining series, each using per-game probabilities. This gives us the full distribution of possible outcomes.</p>
+          <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);" data-i18n="method.monte_features">Accounts for series dynamics:</div>
+          <div class="method-bullet" data-i18n="method.monte_desperation">Desperation factor (elimination games)</div>
+          <div class="method-bullet" data-i18n="method.monte_momentum">Momentum (win/loss streaks)</div>
+          <div class="method-bullet" data-i18n="method.monte_closeout">Close-out pressure</div>
+        </div>
+      </div>
+
+      <!-- Weight Table -->
+      <h4 style="margin-bottom: 0.75rem;" data-i18n="method.weights_title">Factor Weights</h4>
+      <table class="weights-table">
+        <thead>
+          <tr>
+            <th data-i18n="method.weight_factor">Factor</th>
+            <th data-i18n="method.weight_pct">Weight</th>
+            <th data-i18n="method.weight_desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="method.w_elo">Elo Rating Difference</td>
+            <td><span class="weight-bar" style="width: 80px;"></span><span class="weight-pct" data-i18n="method.w_elo_pct">40%</span></td>
+            <td data-i18n="method.w_elo_desc">Base win probability from team ratings</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_home">Home Court Advantage</td>
+            <td><span class="weight-bar" style="width: 30px;"></span><span class="weight-pct" data-i18n="method.w_home_pct">15%</span></td>
+            <td data-i18n="method.w_home_desc">~100 Elo points for home team</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_off">Offensive Efficiency</td>
+            <td><span class="weight-bar" style="width: 30px;"></span><span class="weight-pct" data-i18n="method.w_off_pct">15%</span></td>
+            <td data-i18n="method.w_off_desc">Points per 100 possessions</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_def">Defensive Efficiency</td>
+            <td><span class="weight-bar" style="width: 24px;"></span><span class="weight-pct" data-i18n="method.w_def_pct">12%</span></td>
+            <td data-i18n="method.w_def_desc">Opponent points per 100 possessions</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_net">Net Rating</td>
+            <td><span class="weight-bar" style="width: 16px;"></span><span class="weight-pct" data-i18n="method.w_net_pct">8%</span></td>
+            <td data-i18n="method.w_net_desc">Offensive minus defensive rating</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_schedule">Schedule Factors</td>
+            <td><span class="weight-bar" style="width: 10px;"></span><span class="weight-pct" data-i18n="method.w_schedule_pct">5%</span></td>
+            <td data-i18n="method.w_schedule_desc">Rest days, back-to-backs, travel</td>
+          </tr>
+          <tr>
+            <td data-i18n="method.w_history">Historical Factors</td>
+            <td><span class="weight-bar" style="width: 10px;"></span><span class="weight-pct" data-i18n="method.w_history_pct">5%</span></td>
+            <td data-i18n="method.w_history_desc">Finals experience, comeback rates</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td data-i18n="method.total">Total</td>
+            <td><span class="weight-pct" data-i18n="method.total_pct">100%</span></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- Series Win Probability -->
+  <section style="margin-top: 2rem;">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title" data-i18n="prob.title">Series Win Probability</h3>
+        <span class="card-badge" data-i18n="prob.badge">Monte Carlo (10,000 sims)</span>
+      </div>
+
+      <div class="grid-2" style="align-items: center;">
+        <div>
+          <div class="prob-bar">
+            <div class="prob-fill spurs" style="width: {{ simulation.spurs_win_prob }}%">
+              {{ simulation.spurs_win_prob }}%
+            </div>
+            <div class="prob-fill knicks" style="width: {{ simulation.knicks_win_prob }}%">
+              {{ simulation.knicks_win_prob }}%
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+            <span class="text-spurs font-bold" data-i18n="prob.spurs">Spurs</span>
+            <span class="text-knicks font-bold" data-i18n="prob.knicks">Knicks</span>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <div class="stat-comparison">
+              <div class="stat-label">
+                <span data-i18n="prob.most_likely">Most Likely Outcome</span>
+                <span class="font-mono font-bold">{{ simulation.most_likely }}</span>
+              </div>
+            </div>
+            <div class="stat-comparison">
+              <div class="stat-label">
+                <span data-i18n="prob.avg_games">Average Games</span>
+                <span class="font-mono font-bold">{{ simulation.avg_games }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="height: 300px;">
+          <canvas id="seriesProbChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Completed Games -->
+  <section style="margin-top: 2rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="completed.title">Completed Games</h2>
+      <p class="section-subtitle" data-i18n="completed.subtitle">Results from Games 1-2 at Frost Bank Center</p>
+    </div>
+
+    <div class="grid-2">
+      {% for game in games %}
+        {% if game.score %}
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><span data-i18n="common.game">Game</span> {{ game.game }}</h3>
+            <span class="text-secondary" style="font-size: 0.85rem;">{{ game.date }}</span>
+          </div>
+
+          <div style="text-align: center; margin-bottom: 1rem;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">{{ game.location }}</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 1.5rem;">
+              <div>
+                <div class="font-bold text-knicks" data-i18n="common.knicks">Knicks</div>
+                <div class="font-mono" style="font-size: 2rem; font-weight: 900; color: var(--knicks-secondary);">{{ game.score.knicks }}</div>
+              </div>
+              <div class="text-muted" data-i18n="common.vs">vs</div>
+              <div>
+                <div class="font-bold text-spurs" data-i18n="common.spurs">Spurs</div>
+                <div class="font-mono" style="font-size: 2rem; font-weight: 900; color: var(--spurs-primary);">{{ game.score.spurs }}</div>
+              </div>
+            </div>
+          </div>
+
+          {% if game.key_stats %}
+          <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;" data-i18n="completed.performances">Key Performances</div>
+            {% for player, stat in game.key_stats.items() %}
+            <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.85rem;">
+              <span class="font-bold">{{ player }}</span>
+              <span class="font-mono text-secondary">{{ stat }}</span>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Upcoming Predictions -->
+  <section style="margin-top: 2rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="pred.title">Upcoming Game Predictions</h2>
+      <p class="section-subtitle" data-i18n="pred.subtitle">AI-powered predictions for remaining games</p>
+    </div>
+
+    <div class="grid-3">
+      {% for pred in predictions %}
+      <div class="game-card">
+        <div class="game-card-header">
+          <span class="game-number"><span data-i18n="common.game">Game</span> {{ pred.game }}</span>
+          <span class="game-date">{{ pred.date }}</span>
+        </div>
+        <div class="game-card-body">
+          <div class="game-location">📍 {{ pred.location }}</div>
+
+          <div class="game-teams">
+            <div class="game-team">
+              <div class="game-team-name {% if pred.home == 'spurs' %}text-spurs{% else %}text-knicks{% endif %}">
+                {{ teams[pred.home].abbr }}
+              </div>
+              <div class="game-team-prob font-mono">{{ pred.home_win_prob }}%</div>
+            </div>
+            <div class="game-vs" data-i18n="common.vs">vs</div>
+            <div class="game-team">
+              <div class="game-team-name {% if pred.away == 'spurs' %}text-spurs{% else %}text-knicks{% endif %}">
+                {{ teams[pred.away].abbr }}
+              </div>
+              <div class="game-team-prob font-mono">{{ pred.away_win_prob }}%</div>
+            </div>
+          </div>
+
+          <div class="prob-bar" style="height: 8px;">
+            <div class="prob-fill {% if pred.home == 'spurs' %}spurs{% else %}knicks{% endif %}" style="width: {{ pred.home_win_prob }}%"></div>
+            <div class="prob-fill {% if pred.away == 'spurs' %}spurs{% else %}knicks{% endif %}" style="width: {{ pred.away_win_prob }}%"></div>
+          </div>
+
+          <div class="game-prediction">
+            <div class="text-muted" style="font-size: 0.75rem;" data-i18n="pred.score">Predicted Score</div>
+            <div class="predicted-score">{{ pred.predicted_home_score }} - {{ pred.predicted_away_score }}</div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <ul class="factor-list">
+              {% for factor in pred.key_factors[:3] %}
+              <li>{{ factor }}</li>
+              {% endfor %}
+            </ul>
+            {% if pred.player_insights %}
+            <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.03);">
+              {% for insight in pred.player_insights[:2] %}
+              <div style="font-size: 0.75rem; color: var(--text-muted); padding: 0.15rem 0;">{{ insight }}</div>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Statistical Comparison -->
+  <section style="margin-top: 2rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="stats.title">Statistical Comparison</h2>
+      <p class="section-subtitle" data-i18n="stats.subtitle">Regular season and playoff performance metrics</p>
+    </div>
+
+    <div class="card">
+      <div style="height: 400px;">
+        <canvas id="statComparisonChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Outcome Distribution -->
+  <section style="margin-top: 2rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="outcomes.title">Series Outcome Distribution</h2>
+      <p class="section-subtitle" data-i18n="outcomes.subtitle">Probability of each possible series result</p>
+    </div>
+
+    <div class="card">
+      <div style="height: 300px;">
+        <canvas id="outcomeChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Factors -->
+  <section style="margin-top: 2rem;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="factors.title">Key Series Factors</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title text-spurs" data-i18n="factors.spurs_title">Spurs Advantages</h3>
+        </div>
+        <ul class="factor-list">
+          <li data-i18n="factors.spurs_1">🏆 5-0 all-time in NBA Finals (never lost)</li>
+          <li data-i18n="factors.spurs_2">🛡️ Victor Wembanyama: 3.8 BPG, elite rim protection</li>
+          <li data-i18n="factors.spurs_3">⚡ De'Aaron Fox speed can exploit Knicks in transition</li>
+          <li data-i18n="factors.spurs_4">🏠 Home court: Games 1, 2, 6, 7 at Frost Bank Center</li>
+          <li data-i18n="factors.spurs_5">😤 Nothing to lose mentality at 0-2</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title text-knicks" data-i18n="factors.knicks_title">Knicks Advantages</h3>
+        </div>
+        <ul class="factor-list">
+          <li data-i18n="factors.knicks_1">📊 Lead series 2-0 (94.3% of teams win from here)</li>
+          <li data-i18n="factors.knicks_2">🎯 Jalen Brunson: 27.5 PPG, 8.2 APG, Finals MVP favorite</li>
+          <li data-i18n="factors.knicks_3">🔒 OG Anunoby elite defense on Wembanyama</li>
+          <li data-i18n="factors.knicks_4">💪 Better net rating (+11.1 vs +7.7)</li>
+          <li data-i18n="factors.knicks_5">🏠 3 straight home games at MSG (Games 3, 4, 5)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="historical-note">
+      <strong data-i18n="factors.historical">Historical Context:</strong>
+      <span data-i18n="factors.historical_text">Teams trailing 0-2 in the NBA Finals have come back to win only 5.7% of the time (6 out of 105 series). However, the Spurs are historically perfect in Finals appearances (5-0), and the 2-3-2 format means they must now win at MSG before returning home for Games 6-7.</span>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize i18n
+  I18N.init();
+
+  // Series probability donut
+  createSeriesProbChart('seriesProbChart', {{ simulation.spurs_win_prob }}, {{ simulation.knicks_win_prob }});
+
+  // Stat comparison chart
+  createStatComparisonChart(
+    'statComparisonChart',
+    ['PPG', 'OPPG', 'Off Rtg', 'Def Rtg', 'Net Rtg', 'FG%', '3P%', 'RPG', 'APG', 'BPG'],
+    [{{ spurs_stats.ppg }}, {{ spurs_stats.oppg }}, {{ spurs_stats.off_rtg }}, {{ spurs_stats.def_rtg }}, {{ spurs_stats.net_rtg }}, {{ "%.1f"|format(spurs_stats.fg_pct * 100) }}, {{ "%.1f"|format(spurs_stats.three_pct * 100) }}, {{ spurs_stats.rpg }}, {{ spurs_stats.apg }}, {{ spurs_stats.bpg }}],
+    [{{ knicks_stats.ppg }}, {{ knicks_stats.oppg }}, {{ knicks_stats.off_rtg }}, {{ knicks_stats.def_rtg }}, {{ knicks_stats.net_rtg }}, {{ "%.1f"|format(knicks_stats.fg_pct * 100) }}, {{ "%.1f"|format(knicks_stats.three_pct * 100) }}, {{ knicks_stats.rpg }}, {{ knicks_stats.apg }}, {{ knicks_stats.bpg }}]
+  );
+
+  // Outcome distribution
+  const outcomeProbs = {{ simulation.outcome_probs | tojson }};
+  createOutcomeChart('outcomeChart', outcomeProbs);
+});
+</script>
+{% endblock %}
