@@ -34,6 +34,9 @@
           <li><a href="players.html" data-i18n="nav.players">Players</a></li>
           <li><a href="simulator.html" data-i18n="nav.simulator">Simulator</a></li>
         </ul>
+        <span id="visitor-count" class="visitor-badge" title="Page Views">
+          👁 <span id="visit-num">...</span>
+        </span>
         <button id="lang-toggle" class="lang-toggle" onclick="I18N.toggle()" title="切换到中文">中</button>
       </div>
     </div>
@@ -202,11 +205,11 @@
       <div class="grid-2" style="align-items: center;">
         <div>
           <div class="prob-bar">
-            <div class="prob-fill spurs" style="width: 14.3%">
-              14.3%
+            <div class="prob-fill spurs" style="width: 14.5%">
+              14.5%
             </div>
-            <div class="prob-fill knicks" style="width: 85.7%">
-              85.7%
+            <div class="prob-fill knicks" style="width: 85.5%">
+              85.5%
             </div>
           </div>
           <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
@@ -224,7 +227,7 @@
             <div class="stat-comparison">
               <div class="stat-label">
                 <span data-i18n="prob.avg_games">Average Games</span>
-                <span class="font-mono font-bold">5.1</span>
+                <span class="font-mono font-bold">5.0</span>
               </div>
             </div>
           </div>
@@ -747,7 +750,7 @@ document.addEventListener('DOMContentLoaded', () => {
   I18N.init();
 
   // Series probability donut
-  createSeriesProbChart('seriesProbChart', 14.3, 85.7);
+  createSeriesProbChart('seriesProbChart', 14.5, 85.5);
 
   // Stat comparison chart
   createStatComparisonChart(
@@ -758,7 +761,7 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 
   // Outcome distribution
-  const outcomeProbs = {"0-4": 41.1, "1-4": 29.0, "2-4": 9.2, "3-4": 6.5, "4-2": 3.0, "4-3": 11.2};
+  const outcomeProbs = {"0-4": 41.6, "1-4": 29.0, "2-4": 8.9, "3-4": 5.9, "4-2": 3.2, "4-3": 11.3};
   createOutcomeChart('outcomeChart', outcomeProbs);
 });
 </script>

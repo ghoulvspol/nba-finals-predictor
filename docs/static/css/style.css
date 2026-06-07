@@ -195,6 +195,35 @@ a:hover {
   transform: scale(0.95);
 }
 
+/* --- Visitor Badge --- */
+.visitor-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.visitor-badge:hover {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.15);
+  color: var(--accent-blue);
+}
+
+#visit-num {
+  color: var(--accent-blue);
+  min-width: 2.5em;
+  text-align: right;
+}
+
 /* --- Container --- */
 .container {
   max-width: 1400px;

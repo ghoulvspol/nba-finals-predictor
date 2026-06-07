@@ -34,6 +34,9 @@
           <li><a href="players.html" data-i18n="nav.players">Players</a></li>
           <li><a href="simulator.html" data-i18n="nav.simulator">Simulator</a></li>
         </ul>
+        <span id="visitor-count" class="visitor-badge" title="Page Views">
+          👁 <span id="visit-num">...</span>
+        </span>
         <button id="lang-toggle" class="lang-toggle" onclick="I18N.toggle()" title="切换到中文">中</button>
       </div>
     </div>
@@ -54,7 +57,7 @@
     <div class="card">
       <div class="sim-result">
         <div class="sim-label" data-i18n="sim.spurs_win">Spurs Win Series</div>
-        <div class="sim-probability spurs">14.3%</div>
+        <div class="sim-probability spurs">14.5%</div>
         <div class="text-muted" style="font-size: 0.85rem;" data-i18n="sim.based_on">Based on 10,000 simulations</div>
       </div>
     </div>
@@ -62,7 +65,7 @@
     <div class="card">
       <div class="sim-result">
         <div class="sim-label" data-i18n="sim.knicks_win">Knicks Win Series</div>
-        <div class="sim-probability knicks">85.7%</div>
+        <div class="sim-probability knicks">85.5%</div>
         <div class="text-muted" style="font-size: 0.85rem;" data-i18n="sim.based_on">Based on 10,000 simulations</div>
       </div>
     </div>
@@ -84,7 +87,7 @@
 
       <div style="text-align: center; padding: 1rem;">
         <div class="text-muted" style="font-size: 0.8rem; margin-bottom: 0.5rem;" data-i18n="sim.avg_length">Average Series Length</div>
-        <div class="font-mono font-bold" style="font-size: 1.5rem; color: var(--accent-orange);">5.1</div>
+        <div class="font-mono font-bold" style="font-size: 1.5rem; color: var(--accent-orange);">5.0</div>
         <div class="text-secondary" style="font-size: 0.85rem;" data-i18n="sim.games">games</div>
       </div>
 
@@ -140,9 +143,9 @@
           <td>
             <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
               <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
-                <div style="width: 41.1%; height: 100%; background: var(--knicks-primary); border-radius: 3px;"></div>
+                <div style="width: 41.6%; height: 100%; background: var(--knicks-primary); border-radius: 3px;"></div>
               </div>
-              <span class="font-mono">41.1%</span>
+              <span class="font-mono">41.6%</span>
             </div>
           </td>
           <td>
@@ -180,9 +183,9 @@
           <td>
             <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
               <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
-                <div style="width: 9.2%; height: 100%; background: var(--knicks-primary); border-radius: 3px;"></div>
+                <div style="width: 8.9%; height: 100%; background: var(--knicks-primary); border-radius: 3px;"></div>
               </div>
-              <span class="font-mono">9.2%</span>
+              <span class="font-mono">8.9%</span>
             </div>
           </td>
           <td>
@@ -200,9 +203,9 @@
           <td>
             <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
               <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
-                <div style="width: 6.5%; height: 100%; background: var(--knicks-primary); border-radius: 3px;"></div>
+                <div style="width: 5.9%; height: 100%; background: var(--knicks-primary); border-radius: 3px;"></div>
               </div>
-              <span class="font-mono">6.5%</span>
+              <span class="font-mono">5.9%</span>
             </div>
           </td>
           <td>
@@ -220,9 +223,9 @@
           <td>
             <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
               <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
-                <div style="width: 3.0%; height: 100%; background: var(--spurs-primary); border-radius: 3px;"></div>
+                <div style="width: 3.2%; height: 100%; background: var(--spurs-primary); border-radius: 3px;"></div>
               </div>
-              <span class="font-mono">3.0%</span>
+              <span class="font-mono">3.2%</span>
             </div>
           </td>
           <td>
@@ -240,9 +243,9 @@
           <td>
             <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
               <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
-                <div style="width: 11.2%; height: 100%; background: var(--spurs-primary); border-radius: 3px;"></div>
+                <div style="width: 11.3%; height: 100%; background: var(--spurs-primary); border-radius: 3px;"></div>
               </div>
-              <span class="font-mono">11.2%</span>
+              <span class="font-mono">11.3%</span>
             </div>
           </td>
           <td>
@@ -321,11 +324,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const gameLabels = ['Game 3', 'Game 4', 'Game 5', 'Game 6', 'Game 7'];
 
   const spursProbs = [
-    19.3,
-    16.3,
-    19.3,
-    11.3,
-    11.3,
+    19.5,
+    16.5,
+    19.5,
+    11.5,
+    11.5,
   ];
 
   const knicksProbs = spursProbs.map(p => (100 - p).toFixed(1));
@@ -333,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
   createGameProbChart('gameProbChart', gameLabels, spursProbs, knicksProbs);
 
   // Outcome distribution
-  const outcomeProbs = {"0-4": 41.1, "1-4": 29.0, "2-4": 9.2, "3-4": 6.5, "4-2": 3.0, "4-3": 11.2};
+  const outcomeProbs = {"0-4": 41.6, "1-4": 29.0, "2-4": 8.9, "3-4": 5.9, "4-2": 3.2, "4-3": 11.3};
   createOutcomeChart('outcomeChart', outcomeProbs);
 });
 </script>

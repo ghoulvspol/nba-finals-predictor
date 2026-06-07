@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initNavbar();
   initAnimations();
+  initVisitorCounter();
 });
 
 /**
@@ -113,4 +114,42 @@ async function getPrediction(gameNumber) {
     console.error('Prediction fetch failed:', error);
     return null;
   }
+}
+
+/**
+ * Visitor counter using localStorage + free counter service
+ */
+function initVisitorCounter() {
+  const el = document.getElementById('visit-num');
+  if (!el) return;
+
+  // 1. Local counter (localStorage)
+  const STORAGE_KEY = 'nba-finals-visits';
+  const SESSION_KEY = 'nba-finals-session';
+  let visits = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+
+  // Count unique sessions (not every page refresh)
+  if (!sessionStorage.getItem(SESSION_KEY)) {
+    visits += 1;
+    localStorage.setItem(STORAGE_KEY, visits.toString());
+    sessionStorage.setItem(SESSION_KEY, '1');
+  }
+
+  el.textContent = visits.toLocaleString();
+
+  // 2. Try to get global count from hits.seeyoufarm.com
+  const repoPath = 'ghoulvspol/nba-finals-predictor';
+  const page = window.location.pathname.split('/').pop() || 'index.html';
+  const badgeUrl = `https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fghoulvspol.github.io%2Fnba-finals-predictor%2F${encodeURIComponent(page)}&count_bg=%2300D4FF&title_bg=%231A1A25&icon=&icon_color=%23FFFFFF&title=views&edge_flat=false`;
+
+  // Preload badge to trigger count increment (badge is an SVG image)
+  const img = new Image();
+  img.src = badgeUrl;
+  img.onload = () => {
+    // Extract count from badge if possible (fallback to local count)
+    // The badge SVG contains the count text
+  };
+  img.onerror = () => {
+    // Badge service unavailable, keep local count
+  };
 }
